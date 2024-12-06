@@ -9,17 +9,17 @@ config_updated_bool = False
 
 # Logging function
 def log(message, opcode):
+    try:
+        if opcode == 4:
+            if configuration["debug_mode"] != True:
+                return
+    except Exception:
+        pass
     def get_current_date_time():
         current_datetime = datetime.now()
         return current_datetime.strftime("%Y-%m-%d %H:%M:%S") 
     opcodes = ["None", "ERROR", "WARNING", "INFO", "DEBUG"]
     print(f"[{get_current_date_time()}] [{opcodes[opcode]}]: {message}")
-
-# Self-restart function
-def self_restart():
-    log("Restarting the script...", 3)
-    time.sleep(3)
-    os.execv(sys.executable, ["python"] + sys.argv)
 
 # Apply configuration by reading the config file
 def apply_configuration():
@@ -56,9 +56,14 @@ def configuration_first_time_setup():
             server_port = int(input("Input server port: "))
             temp_config["server_port"] = server_port
 
-        if "debug_test" not in temp_config:
-            debug_test = int(input("Input debug num: "))
-            temp_config["debug_test"] = debug_test
+        if "debug_mode" not in temp_config:
+            debug_mode = ""
+            while debug_mode.upper != "T" or debug_mode.lower() != "F":
+                debug_mode = input("Debug mode (T/F): ")
+            if debug_mode.upper() == "T":
+                temp_config["debug_mode"] = True
+            else:
+                temp_config["debug_mode"] = False
         
         # Save the new configuration to the file
         try:

@@ -6,85 +6,80 @@ from datetime import datetime
 from git import Repo
 import main
 
-# Set your GitHub repository details
-OWNER = "RumixPumix"
-REPO_NAME = "FaIDS"
-REPO_PATH = "../../CentralizedFaIDS"
-BRANCH = "main"  # Name of the current script
-CURRENT_VERSION = "1.0.0"  # Current version of your script (hardcoded or from a version file)
-REMOTE_URL = "https://github.com/RumixPumix/CentralizedFaIDS.git"
-
-# GitHub API URL for releases
-RELEASES_API_URL = f"https://api.github.com/repos/{OWNER}/{REPO_NAME}/releases/latest"
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+LOCAL_REPO_PATH = os.path.abspath(os.path.join(SCRIPT_DIR, "../"))
+# Remote repository URL
+REMOTE_REPO_URL = "https://github.com/RumixPumix/CentralizedFaIDS.git"
 
 def log(message, opcode):
+    try:
+        if opcode == 4:
+            if main.configuration["debug_mode"] != True:
+                return
+    except Exception:
+        pass
     def get_current_date_time():
         current_datetime = datetime.now()
         return current_datetime.strftime("%Y-%m-%d %H:%M:%S") 
     opcodes = ["None","ERROR", "WARNING", "INFO", "DEBUG"]
     print(f"[{get_current_date_time()}] [{opcodes[opcode]}]: {message}")
 
-# Function to check for updates
 def check_updates():
-    """
-    Check if the local repository is up-to-date with the remote repository.
-    Returns True if updates are available, otherwise False.
-    """
-    try:
-        # Get the latest commit hash from GitHub
-        api_url = f"https://api.github.com/repos/{OWNER}/{REPO_NAME}/commits/{BRANCH}"
-        response = requests.get(api_url)
-        response.raise_for_status()
-        remote_commit_hash = response.json()["sha"]
+    if not os.path.exists(LOCAL_REPO_PATH):
+        log(f"Local repository not found at {LOCAL_REPO_PATH}. Cloning instead.", 4)
+        update()
+        return False  # No updates; just cloned the repo.
 
-        # Get the latest commit hash from the local repository
-        if os.path.exists(REPO_PATH):
-            repo = Repo(REPO_PATH)
-            local_commit_hash = repo.head.commit.hexsha
-        else:
-            log("Local repository does not exist. Updates are required.", 4)
-            return True  # If the repo doesn't exist locally, assume updates are needed
+    repo = Repo(LOCAL_REPO_PATH)
 
-        # Compare hashes
-        if remote_commit_hash != local_commit_hash:
-            log("Updates are available.", 4)
-            return True
-        else:
-            log("No updates available. Local repository is up-to-date.", 4)
-            return False
+    # Fetch the latest changes from the remote
+    repo.remotes.origin.fetch()
 
-    except Exception as e:
-        print(f"Error checking updates: {e}")
+    # Get the latest commit hashes for the default branch
+    local_hash = repo.head.commit.hexsha
+    remote_hash = repo.remotes.origin.refs[repo.active_branch.name].commit.hexsha
+
+    if local_hash != remote_hash:
+        log("Updates are available.", 4)
+        return True
+    else:
+        log("Repository is up to date.", 4)
         return False
 
-# Function to update the local repository
 def update():
-    """
-    Pull updates from the remote repository.
-    """
-    try:
-        if not os.path.exists(REPO_PATH):
-            log(f"Cloning repository to {REPO_PATH}...", 4)
-            Repo.clone_from(REMOTE_URL, REPO_PATH)
-        else:
-            log(f"Pulling updates into {REPO_PATH}...", 4)
-            repo = Repo(REPO_PATH)
+    if not os.path.exists(LOCAL_REPO_PATH):
+        try:
+            log("Cloning the repository...", 4)
+            Repo.clone_from(REMOTE_REPO_URL, LOCAL_REPO_PATH)
+            log("Repository cloned successfully.", 4)
+            return True
+        except Exception as error:
+            log(f"Unknown error - uc - update 1- {error}", 1)
+    else:
+        try:
+            log("Pulling the latest changes...", 4)
+            repo = Repo(LOCAL_REPO_PATH)
             repo.remotes.origin.pull()
-        log("Repository updated successfully!", 4)
-        main.self_restart()
-    except Exception as e:
-        log(f"Error updating repository: {e}", 2)
+            log("Repository updated successfully.", 4)
+            return True
+        except Exception as error:
+            log(f"Unknown error - uc - update 2- {error}", 1)
 
 def update_main():
     if check_updates():
         log("New update found! Do you wish to update?", 3)
         try:
             if input("Y/N:").lower() == "y":
-                update()
+                if update():
+                    log("Successfully updated! Restarting...", 3)
+                    time.sleep(3)
+                    main.self_restart()
+                else:
+                    log("Failed to update.", 2)
             else:
                 exit()
         except Exception as error:
-            log(f"Unknown error: uc - update_main - {error}")
+            log(f"Unknown error: uc - update_main - {error}", 1)
     else:
         log("No updates required.", 3)
 
@@ -101,34 +96,10 @@ if __name__ == "__main__":
                     else:
                         exit()
                 except Exception as error:
-                    log(f"Unknown error: uc - main - {error}")
+                    log(f"Unknown error: uc - main - {error}", 1)
             else:
                 log("No updates required.", 3)
         else:
             exit()
     except ValueError:
         exit()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-def update():
-    pass
-
-def check_update():
-    return False
