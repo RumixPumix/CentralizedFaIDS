@@ -1,0 +1,13 @@
+FaIDS - File and IP Distribution System
+
+Program focused on client - server tcp protocol. For private and secure file transfer and registering users with internal domains.
+For hosting, easier distribution, and private domain names that are registered within a private controlled server.
+
+IDEA:
+A centralized server hosting a simple SQLite DB, that stores IP addresses of clients, assigns them their private domains for easier communication, allows token based subdomains, ex:
+
+dukic has registered and sent a request to the server to router all traffic for dukic.ace7esports.com towards his address, which is dynamically and securely shared to all the users of the service, authentication based for security purposes. 
+
+All the clients, can listen for incoming file transfers, which they can accept or decline. For synchronizing purposes. You can as a client multicast or single-cast a file to multiples users.
+
+Ability for the programs to update themselves on boot.
