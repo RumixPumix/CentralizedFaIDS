@@ -1,0 +1,40 @@
+[2024-12-08 17:05:12] [INFO]: Repository is up to date.
+[2024-12-08 17:05:12] [INFO]: No updates required.
+[2024-12-08 17:05:12] [WARNING]: config.json not found. Proceeding with initial setup.
+[2024-12-08 17:05:23] [DEBUG]: Config file saved.
+[2024-12-08 17:05:23] [INFO]: Initializing server...
+[2024-12-08 17:05:23] [DEBUG]: ERROR-M-M-00-01-01: File not found: Certificate file not found: cert.pem
+[2024-12-08 17:05:23] [ERROR]: You have no certificates generated...
+[2024-12-08 17:05:23] [DEBUG]: Traceback (most recent call last):
+  File "C:\Users\Filip\Desktop\Projects\Python\CentralizedFaIDS\FaIDS-Server\main.py", line 309, in main
+    raise FileNotFoundError(f"Certificate file not found: {CERT_FILE}")
+FileNotFoundError: Certificate file not found: cert.pem
+
+[2024-12-08 17:05:23] [INFO]: Do you wish to generate a self-signed certificate? (y/n)
+[2024-12-08 17:05:27] [INFO]: Generating self-signed SSL certificate in the current directory...
+[2024-12-08 17:05:27] [DEBUG]: ERROR-M-GSSC-00-01-01: OpenSSL Error (Check if its installed): [WinError 2] The system cannot find the file specified
+[2024-12-08 17:05:27] [ERROR]: OpenSSL might not be installed.
+[2024-12-08 17:05:27] [DEBUG]: Traceback (most recent call last):
+  File "C:\Users\Filip\Desktop\Projects\Python\CentralizedFaIDS\FaIDS-Server\main.py", line 309, in main
+    raise FileNotFoundError(f"Certificate file not found: {CERT_FILE}")
+FileNotFoundError: Certificate file not found: cert.pem
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Filip\Desktop\Projects\Python\CentralizedFaIDS\FaIDS-Server\main.py", line 108, in generate_self_signed_certificate
+    if subprocess.call(["which", "openssl"], stdout=subprocess.PIPE, stderr=subprocess.PIPE) != 0:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2288.0_x64__qbz5n2kfra8p0\Lib\subprocess.py", line 389, in call
+    with Popen(*popenargs, **kwargs) as p:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2288.0_x64__qbz5n2kfra8p0\Lib\subprocess.py", line 1026, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2288.0_x64__qbz5n2kfra8p0\Lib\subprocess.py", line 1538, in _execute_child
+    hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Filip\.vscode\extensions\ms-python.debugpy-2024.12.0-win32-x64\bundled\libs\debugpy\_vendored\pydevd\_pydev_bundle\pydev_monkey.py", line 914, in new_CreateProcess
+    return getattr(_subprocess, original_name)(app_name, cmd_line, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [WinError 2] The system cannot find the file specified
+

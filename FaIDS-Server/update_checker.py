@@ -1,32 +1,19 @@
 import time
 import os
-import sys
-import requests
-from datetime import datetime
 from git import Repo
-import main
+from main import log
+from main import self_restart
+from main import traceback_func
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 LOCAL_REPO_PATH = os.path.abspath(os.path.join(SCRIPT_DIR, "../"))
 # Remote repository URL
 REMOTE_REPO_URL = "https://github.com/RumixPumix/CentralizedFaIDS.git"
 
-def log(message, opcode):
-    try:
-        if opcode == 4:
-            if main.configuration["debug_mode"] != True:
-                return
-    except Exception:
-        pass
-    def get_current_date_time():
-        current_datetime = datetime.now()
-        return current_datetime.strftime("%Y-%m-%d %H:%M:%S") 
-    opcodes = ["None","ERROR", "WARNING", "INFO", "DEBUG"]
-    print(f"[{get_current_date_time()}] [{opcodes[opcode]}]: {message}")
-
 def check_updates():
     if not os.path.exists(LOCAL_REPO_PATH):
         log(f"Local repository not found at {LOCAL_REPO_PATH}. Cloning instead.", 4)
+        log("You only installed this script? Really?", 3)
         update()
         return False  # No updates; just cloned the repo.
 
@@ -40,30 +27,34 @@ def check_updates():
     remote_hash = repo.remotes.origin.refs[repo.active_branch.name].commit.hexsha
 
     if local_hash != remote_hash:
-        log("Updates are available.", 4)
+        log("Updates are available.", 3)
         return True
     else:
-        log("Repository is up to date.", 4)
+        log("Repository is up to date.", 3)
         return False
 
 def update():
     if not os.path.exists(LOCAL_REPO_PATH):
         try:
-            log("Cloning the repository...", 4)
+            log("Cloning the repository...", 1)
             Repo.clone_from(REMOTE_REPO_URL, LOCAL_REPO_PATH)
-            log("Repository cloned successfully.", 4)
+            log("Repository cloned successfully.", 1)
             return True
         except Exception as error:
-            log(f"Unknown error - uc - update 1- {error}", 1)
+            log(f"ERROR-UC-U0-00-01-01: Unexpected error: {error}", 4)
+            log("Failed to clone the repository.", 1)
+            traceback_func()
     else:
         try:
-            log("Pulling the latest changes...", 4)
+            log("Pulling the latest changes...", 3)
             repo = Repo(LOCAL_REPO_PATH)
             repo.remotes.origin.pull()
-            log("Repository updated successfully.", 4)
+            log("Repository updated successfully.", 3)
             return True
         except Exception as error:
-            log(f"Unknown error - uc - update 2- {error}", 1)
+            log(f"ERROR-UC-U0-00-02-01: Unexpected error: {error}", 4)
+            log("Failed to clone the repository.", 1)
+            traceback_func()
 
 def update_main():
     if check_updates():
@@ -73,13 +64,15 @@ def update_main():
                 if update():
                     log("Successfully updated! Restarting...", 3)
                     time.sleep(3)
-                    main.self_restart()
+                    self_restart()
                 else:
                     log("Failed to update.", 2)
             else:
                 exit()
         except Exception as error:
-            log(f"Unknown error: uc - update_main - {error}", 1)
+            log(f"ERROR-UC-UM-00-01-01: Unexpected error: {error}", 4)
+            log("Unexpected error occured. ", 1)
+            traceback_func()
     else:
         log("No updates required.", 3)
 
@@ -95,8 +88,8 @@ if __name__ == "__main__":
                         update()
                     else:
                         exit()
-                except Exception as error:
-                    log(f"Unknown error: uc - main - {error}", 1)
+                except Exception:
+                    exit()
             else:
                 log("No updates required.", 3)
         else:
