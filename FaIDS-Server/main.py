@@ -107,7 +107,8 @@ def clear_console():
 def self_restart():
     log("Restarting the script...", 3)
     time.sleep(3)
-    os.execv(sys.executable, ["python"] + sys.argv)
+    python = sys.executable
+    os.execl(python, python, *sys.argv)
 
 def generate_self_signed_certificate(cert_file="cert.pem", key_file="key.pem"):
     """Generates a self-signed SSL certificate."""
@@ -345,7 +346,7 @@ def main():
             server_sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
             server_sock.bind((configuration["server_bind_address"], int(configuration["server_port"])))
             server_sock.listen(5)
-            log("Server started...", 3)
+            log(f"Server started, listening on: {configuration["server_bind_address"]}:{configuration["server_port"]}", 3)
             load_users_credentials()
             try:
                 with context.wrap_socket(server_sock, server_side=True) as secure_server_sock:
@@ -480,7 +481,6 @@ if __name__ == "__main__":
     update_checker.update_main()
     configuration = config_handler.configuration_handler()
     if configuration:
-        print("Configuration loaded...")
         for key, value in configuration.items():
             log(f"{key}:{value}", 4)
     main()

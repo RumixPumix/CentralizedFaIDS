@@ -110,3 +110,12 @@ Traceback (most recent call last):
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 FileNotFoundError: [WinError 2] The system cannot find the file specified
 
+[2024-12-09 01:04:44] [INFO]: Repository is up to date.
+[2024-12-09 01:04:44] [INFO]: No updates required.
+[2024-12-09 01:04:44] [INFO]: Configuration applied successfully.
+[2024-12-09 01:04:44] [DEBUG]: server_bind_address:0.0.0.0
+[2024-12-09 01:04:44] [DEBUG]: server_port:54325
+[2024-12-09 01:04:44] [DEBUG]: debug_mode:True
+[2024-12-09 01:04:44] [INFO]: Initializing server...
+[2024-12-09 01:04:44] [INFO]: Server started...
+[2024-12-09 01:04:44] [INFO]: Default credentials set: admin - Pa$$w0rd
