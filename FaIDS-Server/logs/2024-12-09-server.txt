@@ -1,0 +1,112 @@
+[2024-12-09 00:52:59] [INFO]: Repository is up to date.
+[2024-12-09 00:52:59] [INFO]: No updates required.
+[2024-12-09 00:52:59] [INFO]: Configuration applied successfully.
+[2024-12-09 00:52:59] [INFO]: Initializing server...
+[2024-12-09 00:52:59] [DEBUG]: ERROR-M-M-00-01-01: File not found: Certificate file not found: cert.pem
+[2024-12-09 00:52:59] [ERROR]: You have no certificates generated...
+[2024-12-09 00:52:59] [DEBUG]: Traceback (most recent call last):
+  File "C:\Users\Filip\Desktop\Projects\Python\CentralizedFaIDS\FaIDS-Server\main.py", line 319, in main
+    raise FileNotFoundError(f"Certificate file not found: {CERT_FILE}")
+FileNotFoundError: Certificate file not found: cert.pem
+
+[2024-12-09 00:52:59] [INFO]: Do you wish to generate a self-signed certificate? (y/n)
+[2024-12-09 00:53:09] [INFO]: Generating self-signed SSL certificate in the current directory...
+[2024-12-09 00:53:09] [DEBUG]: ERROR-M-GSSC-00-01-01: OpenSSL Error (Check if its installed): [WinError 2] The system cannot find the file specified
+[2024-12-09 00:53:09] [ERROR]: OpenSSL might not be installed. You have to install it and then proceed.
+[2024-12-09 00:53:09] [ERROR]: Or place 'cert.pem' and 'key.pem' files into root folder.
+[2024-12-09 00:53:09] [DEBUG]: Traceback (most recent call last):
+  File "C:\Users\Filip\Desktop\Projects\Python\CentralizedFaIDS\FaIDS-Server\main.py", line 319, in main
+    raise FileNotFoundError(f"Certificate file not found: {CERT_FILE}")
+FileNotFoundError: Certificate file not found: cert.pem
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Filip\Desktop\Projects\Python\CentralizedFaIDS\FaIDS-Server\main.py", line 115, in generate_self_signed_certificate
+    if subprocess.call(["which", "openssl"], stdout=subprocess.PIPE, stderr=subprocess.PIPE) != 0:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2288.0_x64__qbz5n2kfra8p0\Lib\subprocess.py", line 389, in call
+    with Popen(*popenargs, **kwargs) as p:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2288.0_x64__qbz5n2kfra8p0\Lib\subprocess.py", line 1026, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2288.0_x64__qbz5n2kfra8p0\Lib\subprocess.py", line 1538, in _execute_child
+    hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Filip\.vscode\extensions\ms-python.debugpy-2024.12.0-win32-x64\bundled\libs\debugpy\_vendored\pydevd\_pydev_bundle\pydev_monkey.py", line 914, in new_CreateProcess
+    return getattr(_subprocess, original_name)(app_name, cmd_line, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [WinError 2] The system cannot find the file specified
+
+[2024-12-09 00:57:41] [INFO]: Repository is up to date.
+[2024-12-09 00:57:41] [INFO]: No updates required.
+[2024-12-09 00:57:41] [INFO]: Configuration applied successfully.
+[2024-12-09 00:57:41] [INFO]: Initializing server...
+[2024-12-09 00:57:41] [DEBUG]: ERROR-M-M-00-01-01: File not found: Certificate file not found: cert.pem
+[2024-12-09 00:57:41] [ERROR]: You have no certificates generated...
+[2024-12-09 00:57:41] [DEBUG]: Traceback (most recent call last):
+  File "C:\Users\Filip\Desktop\Projects\Python\CentralizedFaIDS\FaIDS-Server\main.py", line 320, in main
+    raise FileNotFoundError(f"Certificate file not found: {CERT_FILE}")
+FileNotFoundError: Certificate file not found: cert.pem
+
+[2024-12-09 00:57:41] [INFO]: Do you wish to generate a self-signed certificate? (y/n)
+[2024-12-09 00:59:01] [WARNING]: This program doesn't support non-SSL configurations. Exiting...
+[2024-12-09 00:59:48] [INFO]: Repository is up to date.
+[2024-12-09 00:59:48] [INFO]: No updates required.
+[2024-12-09 00:59:48] [INFO]: Configuration applied successfully.
+[2024-12-09 00:59:48] [DEBUG]: server_bind_address:0.0.0.0
+[2024-12-09 00:59:48] [DEBUG]: server_port:54325
+[2024-12-09 00:59:48] [DEBUG]: debug_mode:True
+[2024-12-09 00:59:48] [INFO]: Initializing server...
+[2024-12-09 00:59:48] [DEBUG]: ERROR-M-M-00-01-01: File not found: Certificate file not found: cert.pem
+[2024-12-09 00:59:48] [ERROR]: You have no certificates generated...
+[2024-12-09 00:59:48] [DEBUG]: Traceback (most recent call last):
+  File "C:\Users\Filip\Desktop\Projects\Python\CentralizedFaIDS\FaIDS-Server\main.py", line 320, in main
+    raise FileNotFoundError(f"Certificate file not found: {CERT_FILE}")
+FileNotFoundError: Certificate file not found: cert.pem
+
+[2024-12-09 00:59:48] [INFO]: Do you wish to generate a self-signed certificate? (y/n)
+[2024-12-09 00:59:50] [WARNING]: This program doesn't support non-SSL configurations. Exiting...
+[2024-12-09 01:00:28] [INFO]: Repository is up to date.
+[2024-12-09 01:00:28] [INFO]: No updates required.
+[2024-12-09 01:00:28] [INFO]: Configuration applied successfully.
+[2024-12-09 01:00:28] [DEBUG]: server_bind_address:0.0.0.0
+[2024-12-09 01:00:28] [DEBUG]: server_port:54325
+[2024-12-09 01:00:28] [DEBUG]: debug_mode:True
+[2024-12-09 01:00:28] [INFO]: Initializing server...
+[2024-12-09 01:00:28] [DEBUG]: ERROR-M-M-00-01-01: File not found: Certificate file not found: cert.pem
+[2024-12-09 01:00:28] [ERROR]: You have no certificates generated...
+[2024-12-09 01:00:28] [DEBUG]: Traceback (most recent call last):
+  File "C:\Users\Filip\Desktop\Projects\Python\CentralizedFaIDS\FaIDS-Server\main.py", line 320, in main
+    raise FileNotFoundError(f"Certificate file not found: {CERT_FILE}")
+FileNotFoundError: Certificate file not found: cert.pem
+
+[2024-12-09 01:00:28] [INFO]: Do you wish to generate a self-signed certificate? (y/n)
+[2024-12-09 01:00:34] [INFO]: Generating self-signed SSL certificate in the current directory...
+[2024-12-09 01:00:34] [DEBUG]: ERROR-M-GSSC-00-01-01: OpenSSL Error (Check if its installed): [WinError 2] The system cannot find the file specified
+[2024-12-09 01:00:34] [ERROR]: OpenSSL might not be installed. You have to install it and then proceed.
+[2024-12-09 01:00:34] [ERROR]: Or place 'cert.pem' and 'key.pem' files into root folder.
+[2024-12-09 01:00:34] [DEBUG]: Traceback (most recent call last):
+  File "C:\Users\Filip\Desktop\Projects\Python\CentralizedFaIDS\FaIDS-Server\main.py", line 320, in main
+    raise FileNotFoundError(f"Certificate file not found: {CERT_FILE}")
+FileNotFoundError: Certificate file not found: cert.pem
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Filip\Desktop\Projects\Python\CentralizedFaIDS\FaIDS-Server\main.py", line 116, in generate_self_signed_certificate
+    if subprocess.call(["which", "openssl"], stdout=subprocess.PIPE, stderr=subprocess.PIPE) != 0:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2288.0_x64__qbz5n2kfra8p0\Lib\subprocess.py", line 389, in call
+    with Popen(*popenargs, **kwargs) as p:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2288.0_x64__qbz5n2kfra8p0\Lib\subprocess.py", line 1026, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2288.0_x64__qbz5n2kfra8p0\Lib\subprocess.py", line 1538, in _execute_child
+    hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Filip\.vscode\extensions\ms-python.debugpy-2024.12.0-win32-x64\bundled\libs\debugpy\_vendored\pydevd\_pydev_bundle\pydev_monkey.py", line 914, in new_CreateProcess
+    return getattr(_subprocess, original_name)(app_name, cmd_line, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [WinError 2] The system cannot find the file specified
+

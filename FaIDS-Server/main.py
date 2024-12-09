@@ -92,9 +92,10 @@ def log(message, opcode=3):
         current_datetime = datetime.now()
         return current_datetime.strftime("%Y-%m-%d %H:%M:%S") 
     opcodes = [None,"ERROR", "WARNING", "INFO", "DEBUG"]
-    color_codes = [None, Fore.RED, Fore.YELLOW, Fore.WHITE, Fore.PURPLE]
+    color_codes = [None, colorama.Fore.RED, colorama.Fore.YELLOW, colorama.Fore.WHITE, colorama.Fore.MAGENTA]
     message_to_log = f"[{get_current_date_time()}] [{opcodes[opcode]}]: {message}"
-    print(message_to_log)
+    message_to_log_colored = f"{color_codes[opcode]}[{get_current_date_time()}] [{opcodes[opcode]}]: {message}{colorama.Fore.WHITE}"
+    print(message_to_log_colored)
     write_log_to_file(message_to_log)
 
 def clear_console():
@@ -481,5 +482,5 @@ if __name__ == "__main__":
     if configuration:
         print("Configuration loaded...")
         for key, value in configuration.items():
-            print(f"{key}:{value}")
+            log(f"{key}:{value}", 4)
     main()
