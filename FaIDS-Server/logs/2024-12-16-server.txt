@@ -1,0 +1,9 @@
+[2024-12-16 00:33:02] [INFO]: Repository is up to date.
+[2024-12-16 00:33:02] [INFO]: No updates required.
+[2024-12-16 00:33:02] [INFO]: Configuration applied successfully.
+[2024-12-16 00:33:02] [DEBUG]: server_bind_address:192.168.1.129
+[2024-12-16 00:33:02] [DEBUG]: server_port:5000
+[2024-12-16 00:33:02] [DEBUG]: debug_mode:True
+[2024-12-16 00:33:02] [INFO]: Initializing server...
+[2024-12-16 00:33:02] [INFO]: Server started, listening on: 192.168.1.129:5000
+[2024-12-16 00:33:02] [DEBUG]: Loaded these credentials: {'admin': 'Pa$$w0rd', 'rumic': '1203', 'rumic2': '1203'}
