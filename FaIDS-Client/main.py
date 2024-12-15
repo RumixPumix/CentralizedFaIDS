@@ -166,12 +166,12 @@ def recv_all(socket, length):
 def server_connection_establisher(username, password):
     global token
 
-    server_ip = configuration.get["server_ip_address", None]
+    server_ip = configuration.get("server_ip_address", None)
     if not server_ip:
         log(f"No server IP set! Exiting...", 1)
         return None
 
-    server_port = configuration.get["server_port", None]
+    server_port = configuration.get("server_port", None)
     if not server_ip:
         log(f"No server port set! Exiting...", 1)
         return None
