@@ -1,25 +1,28 @@
-import main
 import uuid
 from main import log
 from main import traceback_func
 
-user_credentials = main.user_credentials
-active_clients = main.active_clients
 
-def authenticate_client(client_socket, client_addr):
+def authenticate_client(client_socket, client_addr, user_credentials, active_clients):
     try:
         #client_socket.sendall(b"Please provide your username:")
         username = client_socket.recv(1024).decode().strip()
+        log(f"Received {username}, from: {client_addr}", 4)
 
         #client_socket.sendall(b"Please provide your password:")
         password = client_socket.recv(1024).decode().strip()
+        log(f"Received {password}, from: {client_addr}", 4)
+
+        log(f"Checking for the following inside here: {user_credentials}")
+
 
         if username in user_credentials and user_credentials[username] == password:
             token = str(uuid.uuid4())  # Generate a unique token for the client
             client_socket.sendall(f"Authentication successful. Your token: {token}".encode())
-            log(f"Client {client_addr} authenticated successfully.", 1)
+            log(f"Client {client_addr} authenticated successfully.", 3)
             active_clients[token] = client_addr
-            return token
+            print(active_clients)
+            return token, username, active_clients
         else:
             client_socket.sendall(b"Authentication failed.")
             log(f"Authentication failed for client {client_addr}.", 1)
