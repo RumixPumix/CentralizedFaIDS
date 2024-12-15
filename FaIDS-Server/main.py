@@ -177,7 +177,6 @@ def ssl_certificate():
     main()
 
 def get_local_ips_and_ips_with_gateway():
-    log("Verifying bound IP's validity...", 3)
     valid_ips = []
     ips_with_gateway = []
     # Get the list of all network interfaces
@@ -254,6 +253,7 @@ def attempt_recovery(context):
             log("Attempting to recover from a socket error. Cleaning up existing sockets", 3)
 
             cleanup_existing_sockets()
+            log("Verifying bound IP's validity...", 3)
             valid_ips, ips_with_gateway = get_local_ips_and_ips_with_gateway()
             if configuration["server_bind_address"] not in valid_ips:
                 log(f"Found error! {configuration["server_bind_address"]} isn't an existing IP on this device.",1)

@@ -3,7 +3,7 @@ import os
 import re
 from main import log
 from main import traceback_func
-import main
+from main import get_local_ips_and_ips_with_gateway
 
 config_updated_bool = False
 
@@ -152,6 +152,8 @@ def configuration_first_time_setup():
     try:
         # More configuration addition settings
         if "server_bind_address" not in temp_config:
+            valid_ips, ips_with_gw = get_local_ips_and_ips_with_gateway()
+            log(f"Suggested: {ips_with_gw[0]}")
             server_bind_address = input("Input bind IP: ")
             temp_config["server_bind_address"] = server_bind_address
         
