@@ -187,6 +187,11 @@ def configuration_first_time_setup():
 # Main configuration handler
 def configuration_handler():
     global config_updated_bool
+    directories = ["files", "files/receive", "files/send"]
+
+    # Create directories if they don't exist
+    for directory in directories:
+        os.makedirs(directory, exist_ok=True)
 
     if os.path.exists("config.json"):
         if config_updated_bool:
