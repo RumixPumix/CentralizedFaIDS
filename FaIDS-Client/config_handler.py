@@ -150,7 +150,7 @@ def configuration_first_time_setup():
     try:
         # More configuration addition settings
         if "server_ip_address" not in temp_config:
-            server_ip_address = input("Input bind IP: ")
+            server_ip_address = input("Input centralized server IP: ")
             temp_config["server_ip_address"] = server_ip_address
         
         if "server_port" not in temp_config:

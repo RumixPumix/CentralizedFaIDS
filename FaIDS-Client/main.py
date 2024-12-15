@@ -3,7 +3,7 @@ import os
 import json
 import socket
 import ssl
-import pickle
+from chunk_size_calculator import get_optimal_chunk_size
 
 user_verified = False
 token = ""
@@ -14,123 +14,195 @@ def receive_file(socket):
         clear_console()
 
         # Receive metadata
-        metadata = socket.recv(1024).decode()
-        if not metadata:
-            log("Failed to receive metadata.", 2)
+        try:
+            metadata_length = int.from_bytes(socket.recv(4), 'big')  # Metadata length
+            metadata = recv_all(socket, metadata_length).decode()
+        except (ValueError, ConnectionError) as e:
+            log(f"Error receiving metadata: {e}", 1)
             return False
-        
-        filename, filesize = metadata.split('|')
+
+        # Parse metadata
+        try:
+            metadata_dict = json.loads(metadata)
+            filename = metadata_dict.get("filename")
+            filesize = metadata_dict.get("filesize")
+            if not filename or not filesize:
+                raise ValueError("Missing required metadata fields.")
+        except (json.JSONDecodeError, ValueError) as e:
+            log(f"Invalid metadata format: {e}", 1)
+            return False
+
         filename = os.path.basename(filename)  # Prevent path traversal
         filesize = int(filesize)
-
-        log(f"Receiving file: {filename}, ({filesize} bytes)", 3)
+        chunk_size = get_optimal_chunk_size(filesize)  # Calculate chunk size dynamically
+        log(f"Receiving file: {filename}, ({filesize} bytes) in chunks of {chunk_size} bytes", 3)
 
         # Ensure the directory exists
-        os.makedirs("files/receive", exist_ok=True)
+        try:
+            os.makedirs("files/receive", exist_ok=True)
+        except OSError as e:
+            log(f"Error creating directory: {e}", 1)
+            return False
 
         # Receive the file
         filepath = os.path.join("files/receive", filename)
-        with open(filepath, "wb") as file:
-            received = 0
-            while received < filesize:
-                data = socket.recv(min(1024, filesize - received))
-                if not data:
-                    log("Connection lost during file transfer.", 1)
-                    return False
-                file.write(data)
-                received += len(data)
-                log(f"Received {received}/{filesize} bytes", 3)
+        try:
+            with open(filepath, "wb") as file:
+                received = 0
+                while received < filesize:
+                    data = socket.recv(min(chunk_size, filesize - received))
+                    if not data:
+                        log("Connection lost during file transfer.", 1)
+                        return False
+                    file.write(data)
+                    received += len(data)
+
+                    # Periodic progress log
+                    if received % (1024 * 1024) == 0:  # Every MB
+                        log(f"Received {received}/{filesize} bytes", 3)
+        except (OSError, IOError) as e:
+            log(f"Error writing file: {e}", 1)
+            return False
 
         log("File transfer complete.", 3)
         return True
 
     except Exception as e:
-        log(f"Error receiving file: {e}", 1)
+        log(f"Unexpected error in receive_file: {e}", 1)
         return False
 
 
 def send_file(socket, filepath):
     try:
-        # Validate file
+        # Validate file existence
         if not os.path.isfile(filepath):
             log(f"File does not exist: {filepath}", 1)
             return False
 
         filename = os.path.basename(filepath)
-        filesize = os.path.getsize(filepath)
+        try:
+            filesize = os.path.getsize(filepath)
+        except OSError as e:
+            log(f"Error getting file size: {e}", 1)
+            return False
+
+        chunk_size = get_optimal_chunk_size(filesize)  # Calculate chunk size dynamically
 
         # Send metadata
-        metadata = f"{filename}|{filesize}"
-        socket.sendall(metadata.encode())
-        log(f"Sending file: {filename}, ({filesize} bytes)", 3)
+        try:
+            metadata = json.dumps({"filename": filename, "filesize": filesize})
+            socket.sendall(len(metadata).to_bytes(4, 'big'))  # Metadata length
+            socket.sendall(metadata.encode())
+        except (OSError, ConnectionError) as e:
+            log(f"Error sending metadata: {e}", 1)
+            return False
+
+        log(f"Sending file: {filename}, ({filesize} bytes) in chunks of {chunk_size} bytes", 3)
 
         # Send the file
-        with open(filepath, "rb") as file:
-            while (chunk := file.read(1024)):
-                socket.sendall(chunk)
-        
+        try:
+            with open(filepath, "rb") as file:
+                while (chunk := file.read(chunk_size)):
+                    socket.sendall(chunk)
+        except (OSError, IOError, ConnectionError) as e:
+            log(f"Error sending file data: {e}", 1)
+            return False
+
         log("File sent successfully.", 3)
         return True
 
     except Exception as e:
-        log(f"Error sending file: {e}", 1)
+        log(f"Unexpected error in send_file: {e}", 1)
         return False
 
+
+
 def send_server_action(socket, action, sub_action, username=None):
-    data_to_send = {}
-    data_to_send["token"] = token
-    data_to_send["action"] = action
-    data_to_send["sub-action"] = sub_action
-    if not username == None:
+    data_to_send = {
+        "token": token,
+        "action": action,
+        "sub-action": sub_action
+    }
+    if username is not None:
         data_to_send["username"] = username
 
     try:
         # Serialize the dictionary
-        serialized_data = pickle.dumps(data_to_send)
+        serialized_data = json.dumps(data_to_send).encode('utf-8')
         
-        # Send the length of the serialized data first to allow the server to know how much data to expect
+        # Send the length of the serialized data
         socket.sendall(len(serialized_data).to_bytes(4, 'big'))  # Send size in 4 bytes
         
         # Send the serialized dictionary
         socket.sendall(serialized_data)
 
+        # Only handle server responses if sub_action == 1
         if sub_action != 1:
             return
 
+        # Receive the response length
         data_length = int.from_bytes(socket.recv(4), 'big')
-
-        serialized_data = socket.recv(data_length)
-
-        received_list = pickle.loads(serialized_data)
-
+        
+        # Receive the complete serialized response
+        serialized_data = recv_all(socket, data_length)
+        
+        # Deserialize the response
+        received_list = json.loads(serialized_data.decode('utf-8'))
+        
         print(received_list)
-
         return received_list
     except Exception as e:
-        log(f"Error sending data to server: Error: {e}", 1)
+        log(f"Error sending data to server: {e}", 1)
+
+def recv_all(socket, length):
+    data = b""
+    while len(data) < length:
+        packet = socket.recv(length - len(data))
+        if not packet:
+            raise ConnectionError("Socket connection closed prematurely")
+        data += packet
+    return data
 
 def server_connection_establisher(username, password):
     global token
 
-    server_ip = configuration["server_ip_address"]
+    server_ip = configuration.get["server_ip_address", None]
+    if not server_ip:
+        log(f"No server IP set! Exiting...", 1)
+        return None
 
-    server_port = configuration["server_port"]
+    server_port = configuration.get["server_port", None]
+    if not server_ip:
+        log(f"No server port set! Exiting...", 1)
+        return None
+    
+    try:
 
-    context = ssl.create_default_context()
-    context.check_hostname = False
-    context.verify_mode = ssl.CERT_NONE
+        context = ssl.create_default_context()
+        context.check_hostname = False
+        context.verify_mode = ssl.CERT_NONE
+    except Exception as ssl_creation_error:
+        log(f"Error occured during SSL context creation.", 1)
+    try:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as socket_stream:
+            socket_stream.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            try:
+                socket_stream.connect((server_ip, server_port))
+            except TimeoutError:
+                log("Server didn't respond...", 2)
+                input("Enter to exit program...")
+                return None
+            with context.wrap_socket(socket_stream, server_hostname=server_ip) as ssl_client_connection:
+                ssl_client_connection.sendall(username.encode())
+                ssl_client_connection.sendall(password.encode())
+                token = ssl_client_connection.recv(1024)
+                log("Received token, proceeding with program", 4)
+                server_communication_handler_session(ssl_client_connection)
+    except Exception as general_except_error:
+        log(f"General error occured: {general_except_error}", 1)
+        input("Enter to exit program...")
 
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as socket_stream:
-        socket_stream.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        socket_stream.connect((server_ip, server_port))
-        with context.wrap_socket(socket_stream, server_hostname=server_ip) as ssl_client_connection:
-            ssl_client_connection.sendall(username.encode())
-            ssl_client_connection.sendall(password.encode())
-            token = ssl_client_connection.recv(1024)
-            log("Received token, proceeding with program", 4)
-            server_communication_handler_session(token, ssl_client_connection)
-
-def server_communication_handler_session(token, ssl_client_connection):
+def server_communication_handler_session(ssl_client_connection):
     options = [None, "Upload File", "Receive File","Domain Request"]
     
     while True:
@@ -147,7 +219,7 @@ def server_communication_handler_session(token, ssl_client_connection):
         try:
             # Get user input and process it
             user_choice = int(input("Option: "))
-            if user_choice == 1: #MISC ACTIONS = 1 - REQ ACTIVE USERS, 2-ACTUAL FILE SENDING
+            if user_choice == 1: #File transfer option
                 # Case 1: Upload File
                 files = os.listdir("files/send")
                 if files:
@@ -181,7 +253,7 @@ def server_communication_handler_session(token, ssl_client_connection):
                 else:
                     print("No files available to upload.")
             elif user_choice == 2:
-                input("Press enter to start receiving a file...")
+                input("Press enter to start receiving a file... New update will allow accepting/declining file transfer")
                 send_server_action(ssl_client_connection, 1, 2)
                 if receive_file(ssl_client_connection):
                     input()
@@ -215,7 +287,7 @@ def login(username, password):
 def register(username, password):
     #dodat password checks
     if not os.path.exists("credentials/user_credentials.json"):
-        os.makedirs("credentials")
+        os.makedirs("credentials", exist_ok=True)
         with open("credentials/user_credentials.json", "w") as credentials_file:
             pass
     with open("credentials/user_credentials.json", "w") as credentials_file:
@@ -225,11 +297,9 @@ def register(username, password):
         
 def main():
     global user_verified
-    #username = input("Username: ")
-    #password = input("Password: ")
-    username = "admin"
-    password = "Pa$$w0rd"
-    if input("Registering (y/n):").lower() == "y":
+    if not os.path.exists("credentials/user_credentials.json"):
+        username = input("Username: ")
+        password = input("Password: ")
         if register(username, password):
             if login(username, password):
                 user_verified = True
@@ -242,6 +312,12 @@ def main():
             print("Register unsuccessful")
             main()
     else:
+        if input("Logout (y/n)?").lower() == "y":
+            os.remove("credentials/user_credentials.json")
+            main()
+        username = input("Username: ")
+        password = input("Password: ")
+        username, password = "admin", "Pa$$w0rd"
         if login(username, password):
             user_verified = True
             print("Logged in successfully!")
