@@ -4,6 +4,7 @@ import json
 import socket
 import ssl
 import traceback
+import time
 from chunk_size_calculator import get_optimal_chunk_size
 
 user_verified = False
@@ -49,6 +50,7 @@ def receive_file(socket):
         try:
             with open(filepath, "wb") as file:
                 received = 0
+                start_time = time.time()  # Start timing
                 while received < filesize:
                     data = socket.recv(min(chunk_size, filesize - received))
                     if not data:
@@ -57,9 +59,27 @@ def receive_file(socket):
                     file.write(data)
                     received += len(data)
 
-                    # Periodic progress log
-                    if received % (1024 * 1024) == 0:  # Every MB
-                        log(f"Received {received}/{filesize} bytes", 3)
+                    # Calculate elapsed time and speed
+                    elapsed_time = time.time() - start_time
+                    if elapsed_time > 0:
+                        speed_in_mb = (received / (1024 * 1024)) / elapsed_time  # Speed in MB/s
+                        speed_in_kb = (received / 1024) / elapsed_time  # Speed in KB/s
+                    clear_console()
+                    # Determine if the file size should be displayed in KB or MB
+                    if filesize < 1024 * 1024:  # Less than 1 MB
+                        if 0.1 <= speed_in_mb <= 0.9:
+                            log(f"Downloaded {received / 1024:.2f} KB of {filesize / 1024:.2f} KB "
+                                f"at {speed_in_kb:.2f} KB/s", 3)
+                        else:
+                            log(f"Downloaded {received / 1024:.2f} KB of {filesize / 1024:.2f} KB "
+                                f"at {speed_in_mb:.2f} MB/s", 3)
+                    else:  # 1 MB or more
+                        if 0.1 <= speed_in_mb <= 0.9:
+                            log(f"Downloaded {received / (1024 * 1024):.2f} MB of {filesize / (1024 * 1024):.2f} MB "
+                                f"at {speed_in_kb:.2f} KB/s", 3)
+                        else:
+                            log(f"Downloaded {received / (1024 * 1024):.2f} MB of {filesize / (1024 * 1024):.2f} MB "
+                                f"at {speed_in_mb:.2f} MB/s", 3)
         except (OSError, IOError) as e:
             log(f"Error writing file: {e}", 1)
             return False
@@ -287,6 +307,13 @@ def server_communication_handler_session(ssl_client_connection):
         except ValueError:
             log("Incorrect option, please enter a valid number.", 1)        
 
+
+
+
+
+
+
+
 def hash_credentials(username, password):
     credentials = f"{username}:{password}"
     credentials_hash_object = hashlib.sha256(credentials.encode())  # Encode text to bytes
@@ -345,8 +372,7 @@ def main():
             print("Failed to login.")
             main()
 
-from logging import log
-from logging import clear_console
+from logging import log, clear_console
 from config_handler import configuration_handler
 
 if __name__ == "__main__":

@@ -101,29 +101,32 @@ def receive_client_response(client_socket):
         log(f"Error receiving data: {data_receiving_error}", 4)
         log(f"Data received: {serialized_data}")
 
+def send_file_transfer_ready_users(client_socket):
+    with file_receive_lock:
+        username_list = list(file_receive_users.keys())
+    send_client_response(client_socket, 1, 1, username_list)
+
+def set_user_file_transfer_ready_state(client_socket, username):
+    with file_receive_lock:
+        file_receive_users[username] = client_socket
+
 def file_action_handler(client_socket, received_dict, username):
-                        match received_dict["sub-action"]:
-                            case 1: # Handle action 1 (request for users)
-                                log(f"User {username} requested active users for file transfer.", 3)
-                                # Lock the dictionary while reading it
-                                with file_receive_lock:
-                                    username_list = list(file_receive_users.keys())
-                                serialized_data = json.dumps(username_list).encode()
-                                client_socket.sendall(len(serialized_data).to_bytes(4, 'big'))
-                                log(f"Sending usernames: {serialized_data}", 4)
-                                client_socket.sendall(serialized_data)
-                            case 2:
-                                log(f"User {username} requested files to be sent over.", 3)
-                                # Lock the dictionary while modifying it (add user to the file receive users)
-                                with file_receive_lock:
-                                    file_receive_users[username] = client_socket
-                                    log(f"Current users waiting for files: {file_receive_users}", 4)
-                            case 3:
-                                # File transfer request
-                                target_user = received_dict.get("username")
-                                if target_user in file_receive_users:
-                                    log(f"File transfer initiated - From: {username} To: {target_user}", 3)
-                                    transfer_file(client_socket, file_receive_users[target_user])
+    match received_dict["sub-action"]:
+        case 1: # Handle action 1 (request for users)
+            log(f"User '{username}' requested users for file transfer", 3)
+            send_file_transfer_ready_users(client_socket)
+        case 2: #Set user to file transfer ready state
+            log(f"User '{username}' set to file transfer state", 3)
+            set_user_file_transfer_ready_state(client_socket, username)
+        case 3:
+            # File transfer begin.
+            target_user = received_dict.get("username")
+            if target_user in file_receive_users:
+                log(f"File transfer initiated - From: {username} To: {target_user}", 3)
+                send_client_response(client_socket, 1, 3, 1)
+                transfer_file(client_socket, file_receive_users[target_user])
+            else:
+                send_client_response(client_socket, 1, 3, 0)
 
 
 def handle_client(client_socket, client_addr, token, username):
@@ -132,18 +135,14 @@ def handle_client(client_socket, client_addr, token, username):
         active_clients[username] = [token, client_socket]
     try:
         while True:
-            # Print the current active users (for debugging purposes)
-
             try:
-                # Receive the data length and the actual data
                 received_dict = receive_client_response(client_socket)
-
                 # Handle the action
                 match received_dict["action"]:
-                    case 1: #File transfer action
+                    case 1: #File action
                         file_action_handler(client_socket, received_dict, username)
-                        
-
+                    case 2: #Domain change
+                        pass
             except Exception as e:
                 log(f"Error while handling client {client_addr}: {e}", 4)
                 traceback_func()
