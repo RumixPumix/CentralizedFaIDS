@@ -66,7 +66,7 @@ def transfer_file(from_socket, to_socket):
         log(f"Error during file transfer: {e}", 1)
         traceback_func()
 
-def send_client_response(client_socket, action, sub_action, response):
+def send_client_action(client_socket, action, sub_action, response):
     data_to_send = {
         "action": action,
         "sub-action": sub_action,
@@ -104,7 +104,7 @@ def receive_client_response(client_socket):
 def send_file_transfer_ready_users(client_socket):
     with file_receive_lock:
         username_list = list(file_receive_users.keys())
-    send_client_response(client_socket, 1, 1, username_list)
+    send_client_action(client_socket, 1, 1, username_list)
 
 def set_user_file_transfer_ready_state(client_socket, username):
     with file_receive_lock:
@@ -123,10 +123,10 @@ def file_action_handler(client_socket, received_dict, username):
             target_user = received_dict.get("username")
             if target_user in file_receive_users:
                 log(f"File transfer initiated - From: {username} To: {target_user}", 3)
-                send_client_response(client_socket, 1, 3, 1)
+                send_client_action(client_socket, 1, 3, 1)
                 transfer_file(client_socket, file_receive_users[target_user])
             else:
-                send_client_response(client_socket, 1, 3, 0)
+                send_client_action(client_socket, 1, 3, 0)
 
 
 def handle_client(client_socket, client_addr, token, username):

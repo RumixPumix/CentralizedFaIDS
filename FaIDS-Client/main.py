@@ -11,6 +11,15 @@ user_verified = False
 token = ""
 configuration = {}
 
+def recv_all(socket, length):
+    data = b""
+    while len(data) < length:
+        packet = socket.recv(length - len(data))
+        if not packet:
+            raise ConnectionError("Socket connection closed prematurely")
+        data += packet
+    return data
+
 def receive_file(socket):
     try:
         clear_console()
@@ -135,6 +144,9 @@ def send_file(socket, filepath):
         log(f"Unexpected error in send_file: {e}", 1)
         return False
 
+def parse_server_response_data(data):
+    response = data.get("response", None)
+
 def send_server_action(socket, action, sub_action, username=None):
     log("Preparing data to send to the server.", 4)
 
@@ -150,96 +162,34 @@ def send_server_action(socket, action, sub_action, username=None):
 
     try:
         # Serialize the dictionary
-        log(f"Serializing data: {data_to_send}", 4)
         serialized_data = json.dumps(data_to_send).encode()
-        log(f"Serialized data: {serialized_data}", 4)
 
         # Send the length of the serialized data
         serialized_length = len(serialized_data).to_bytes(4, 'big')
-        log(f"Serialized data length (4 bytes): {serialized_length}", 4)
         socket.sendall(serialized_length)
-        log("Sent the length of serialized data to the server.", 3)
 
         # Send the serialized dictionary
         socket.sendall(serialized_data)
-        log("Sent serialized data to the server.", 3)
 
         # Only handle server responses if sub_action == 1
         if sub_action != 1:
-            log("No response handling required for sub_action != 1.", 4)
             return
-
-        # Receive the response length
-        log("Waiting to receive the length of the server response.", 4)
-        response_length_data = socket.recv(4)
-        if not response_length_data:
-            log("Failed to receive response length from server.", 1)
-            return
-        data_length = int.from_bytes(response_length_data, 'big')
-        log(f"Received server response length: {data_length} bytes", 3)
-
-        # Receive the complete serialized response
-        log(f"Receiving the full response from the server (length: {data_length} bytes).", 4)
-        serialized_data = recv_all(socket, data_length)
-        log(f"Received serialized data: {serialized_data}", 4)
-
-        # Deserialize the response
-        log("Deserializing server response.", 4)
-        received_list = json.loads(serialized_data.decode())
-        log(f"Deserialized response: {received_list}", 3)
-        return received_list
+        parse_server_response_data(receive_server_response(socket))
+        return parse_server_response_data(receive_server_response(socket))
 
     except Exception as e:
         log(f"Error sending data to server: {e}", 1)
         log(traceback.format_exc(), 4)  # Log full traceback for debugging
 
-def recv_all(socket, length):
-    data = b""
-    while len(data) < length:
-        packet = socket.recv(length - len(data))
-        if not packet:
-            raise ConnectionError("Socket connection closed prematurely")
-        data += packet
-    return data
-
-def server_connection_establisher(username, password):
-    global token
-
-    server_ip = configuration.get("server_ip_address", None)
-    if not server_ip:
-        log(f"No server IP set! Exiting...", 1)
-        return None
-
-    server_port = configuration.get("server_port", None)
-    if not server_ip:
-        log(f"No server port set! Exiting...", 1)
-        return None
-    
+def receive_server_response(server_socket):
     try:
-
-        context = ssl.create_default_context()
-        context.check_hostname = False
-        context.verify_mode = ssl.CERT_NONE
-    except Exception as ssl_creation_error:
-        log(f"Error occured during SSL context creation.", 1)
-    try:
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as socket_stream:
-            socket_stream.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-            try:
-                socket_stream.connect((server_ip, server_port))
-            except TimeoutError:
-                log("Server didn't respond...", 2)
-                input("Enter to exit program...")
-                return None
-            with context.wrap_socket(socket_stream, server_hostname=server_ip) as ssl_client_connection:
-                ssl_client_connection.sendall(username.encode())
-                ssl_client_connection.sendall(password.encode())
-                token = ssl_client_connection.recv(1024)
-                log("Received token, proceeding with program", 4)
-                server_communication_handler_session(ssl_client_connection)
-    except Exception as general_except_error:
-        log(f"General error occured: {general_except_error}", 1)
-        input("Enter to exit program...")
+        data_length = int.from_bytes(server_socket.recv(4), "big")
+        serialized_data = recv_all(server_socket, data_length)
+        received_dict = json.loads(serialized_data.decode())
+        return received_dict
+    except Exception as data_receiving_error:
+        log(f"Error receiving data: {data_receiving_error}", 4)
+        log(f"Data received: {serialized_data}")
 
 def server_communication_handler_session(ssl_client_connection):
     options = [None, "Upload File", "Receive File","Domain Request"]
@@ -313,6 +263,47 @@ def server_communication_handler_session(ssl_client_connection):
 
 
 
+
+
+
+def server_connection_establisher(username, password):
+    global token
+
+    server_ip = configuration.get("server_ip_address", None)
+    if not server_ip:
+        log(f"No server IP set! Exiting...", 1)
+        return None
+
+    server_port = configuration.get("server_port", None)
+    if not server_ip:
+        log(f"No server port set! Exiting...", 1)
+        return None
+    
+    try:
+
+        context = ssl.create_default_context()
+        context.check_hostname = False
+        context.verify_mode = ssl.CERT_NONE
+    except Exception as ssl_creation_error:
+        log(f"Error occured during SSL context creation.", 1)
+    try:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as socket_stream:
+            socket_stream.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            try:
+                socket_stream.connect((server_ip, server_port))
+            except TimeoutError:
+                log("Server didn't respond...", 2)
+                input("Enter to exit program...")
+                return None
+            with context.wrap_socket(socket_stream, server_hostname=server_ip) as ssl_client_connection:
+                ssl_client_connection.sendall(username.encode())
+                ssl_client_connection.sendall(password.encode())
+                token = ssl_client_connection.recv(1024)
+                log("Received token, proceeding with program", 4)
+                server_communication_handler_session(ssl_client_connection)
+    except Exception as general_except_error:
+        log(f"General error occured: {general_except_error}", 1)
+        input("Enter to exit program...")
 
 def hash_credentials(username, password):
     credentials = f"{username}:{password}"

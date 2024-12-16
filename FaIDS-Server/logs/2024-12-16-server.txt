@@ -169,3 +169,26 @@ json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
 json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
 
 [2024-12-16 13:21:55] [INFO]: Connection to client ('192.168.1.218', 63450) closed.
+[2024-12-16 15:09:29] [INFO]: Repository is up to date.
+[2024-12-16 15:09:29] [INFO]: No updates required.
+[2024-12-16 15:09:29] [INFO]: Configuration applied successfully.
+[2024-12-16 15:09:29] [DEBUG]: server_bind_address:192.168.1.129
+[2024-12-16 15:09:29] [DEBUG]: server_port:5000
+[2024-12-16 15:09:29] [DEBUG]: debug_mode:True
+[2024-12-16 15:09:29] [INFO]: Initializing server...
+[2024-12-16 15:09:29] [INFO]: Server started, listening on: 192.168.1.129:5000
+[2024-12-16 15:09:29] [DEBUG]: Loaded these credentials: {'admin': 'Pa$$w0rd', 'rumic': '1203', 'rumic2': '1203'}
+[2024-12-16 15:09:38] [INFO]: Connection from ('192.168.1.218', 64735)
+[2024-12-16 15:09:38] [DEBUG]: Received admin, from: ('192.168.1.218', 64735)
+[2024-12-16 15:09:38] [DEBUG]: Received Pa$$w0rd, from: ('192.168.1.218', 64735)
+[2024-12-16 15:09:38] [INFO]: Checking for the following inside here: {'admin': 'Pa$$w0rd', 'rumic': '1203', 'rumic2': '1203'}
+[2024-12-16 15:09:38] [INFO]: Client ('192.168.1.218', 64735) authenticated successfully.
+[2024-12-16 15:09:38] [INFO]: Client ('192.168.1.218', 64735) authenticated with token 68846651-ed38-420f-801f-d54cb578a94e. Starting communication thread.
+[2024-12-16 15:09:59] [INFO]: Connection from ('192.168.1.198', 54922)
+[2024-12-16 15:09:59] [DEBUG]: Received rumic, from: ('192.168.1.198', 54922)
+[2024-12-16 15:09:59] [DEBUG]: Received 1203, from: ('192.168.1.198', 54922)
+[2024-12-16 15:09:59] [INFO]: Checking for the following inside here: {'admin': 'Pa$$w0rd', 'rumic': '1203', 'rumic2': '1203'}
+[2024-12-16 15:09:59] [INFO]: Client ('192.168.1.198', 54922) authenticated successfully.
+[2024-12-16 15:09:59] [INFO]: Client ('192.168.1.198', 54922) authenticated with token 0ea69628-0e61-4589-9ff6-28ddb377fdf4. Starting communication thread.
+[2024-12-16 15:10:03] [INFO]: User 'rumic' set to file transfer state
+[2024-12-16 15:10:27] [INFO]: User 'admin' requested users for file transfer
