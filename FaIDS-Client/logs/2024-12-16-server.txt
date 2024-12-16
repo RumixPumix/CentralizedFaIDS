@@ -32,3 +32,132 @@
 [2024-12-16 02:20:32] [ERROR]: Incorrect option, please enter a valid number.
 [2024-12-16 02:21:09] [INFO]: Configuration applied successfully.
 [2024-12-16 02:21:16] [DEBUG]: Received token, proceeding with program
+[2024-12-16 02:36:12] [INFO]: Configuration applied successfully.
+[2024-12-16 02:36:20] [DEBUG]: Received token, proceeding with program
+[2024-12-16 02:36:22] [DEBUG]: Preparing data to send to the server.
+[2024-12-16 02:36:22] [DEBUG]: Serializing data: {'token': "b'Authentication successful. Your token: fc29c480-a319-44c0-96ce-a6ed3978655e'", 'action': 1, 'sub-action': 1}
+[2024-12-16 02:36:22] [DEBUG]: Serialized data: b'{"token": "b\'Authentication successful. Your token: fc29c480-a319-44c0-96ce-a6ed3978655e\'", "action": 1, "sub-action": 1}'
+[2024-12-16 02:36:22] [DEBUG]: Serialized data length (4 bytes): b'\x00\x00\x00y'
+[2024-12-16 02:36:22] [INFO]: Sent the length of serialized data to the server.
+[2024-12-16 02:36:22] [INFO]: Sent serialized data to the server.
+[2024-12-16 02:36:22] [DEBUG]: Waiting to receive the length of the server response.
+[2024-12-16 02:36:22] [INFO]: Received server response length: 9 bytes
+[2024-12-16 02:36:22] [DEBUG]: Receiving the full response from the server (length: 9 bytes).
+[2024-12-16 02:36:23] [DEBUG]: Received serialized data: b'["rumic"]'
+[2024-12-16 02:36:23] [DEBUG]: Deserializing server response.
+[2024-12-16 02:36:23] [INFO]: Deserialized response: ['rumic']
+[2024-12-16 02:36:31] [DEBUG]: Preparing data to send to the server.
+[2024-12-16 02:36:31] [DEBUG]: Added username to data: rumic
+[2024-12-16 02:36:31] [DEBUG]: Serializing data: {'token': "b'Authentication successful. Your token: fc29c480-a319-44c0-96ce-a6ed3978655e'", 'action': 1, 'sub-action': 3, 'username': 'rumic'}
+[2024-12-16 02:36:31] [DEBUG]: Serialized data: b'{"token": "b\'Authentication successful. Your token: fc29c480-a319-44c0-96ce-a6ed3978655e\'", "action": 1, "sub-action": 3, "username": "rumic"}'
+[2024-12-16 02:36:31] [DEBUG]: Serialized data length (4 bytes): b'\x00\x00\x00\x8e'
+[2024-12-16 02:36:31] [INFO]: Sent the length of serialized data to the server.
+[2024-12-16 02:36:31] [INFO]: Sent serialized data to the server.
+[2024-12-16 02:36:31] [DEBUG]: No response handling required for sub_action != 1.
+[2024-12-16 02:36:31] [INFO]: Sending file: libwireshark.dll, (90169064 bytes) in chunks of 131072 bytes
+[2024-12-16 02:36:36] [INFO]: File sent successfully.
+[2024-12-16 02:39:20] [DEBUG]: Preparing data to send to the server.
+[2024-12-16 02:39:20] [DEBUG]: Serializing data: {'token': "b'Authentication successful. Your token: fc29c480-a319-44c0-96ce-a6ed3978655e'", 'action': 1, 'sub-action': 1}
+[2024-12-16 02:39:20] [DEBUG]: Serialized data: b'{"token": "b\'Authentication successful. Your token: fc29c480-a319-44c0-96ce-a6ed3978655e\'", "action": 1, "sub-action": 1}'
+[2024-12-16 02:39:20] [DEBUG]: Serialized data length (4 bytes): b'\x00\x00\x00y'
+[2024-12-16 02:39:20] [ERROR]: Error sending data to server: EOF occurred in violation of protocol (_ssl.c:2417)
+[2024-12-16 02:39:20] [DEBUG]: Traceback (most recent call last):
+  File "C:\Users\Filip\Desktop\Projects\Python\CentralizedFaIDS\FaIDS-Client\main.py", line 140, in send_server_action
+    socket.sendall(serialized_length)
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2288.0_x64__qbz5n2kfra8p0\Lib\ssl.py", line 1210, in sendall
+    v = self.send(byte_view[count:])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2288.0_x64__qbz5n2kfra8p0\Lib\ssl.py", line 1179, in send
+    return self._sslobj.write(data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+ssl.SSLEOFError: EOF occurred in violation of protocol (_ssl.c:2417)
+
+[2024-12-16 02:39:20] [ERROR]: General error occured: 'NoneType' object is not iterable
+[2024-12-16 02:39:29] [DEBUG]: Received token, proceeding with program
+[2024-12-16 02:39:31] [DEBUG]: Preparing data to send to the server.
+[2024-12-16 02:39:31] [DEBUG]: Serializing data: {'token': "b'Authentication successful. Your token: a6fc7b45-66f8-4151-bd1e-484e60c45d7b'", 'action': 1, 'sub-action': 1}
+[2024-12-16 02:39:31] [DEBUG]: Serialized data: b'{"token": "b\'Authentication successful. Your token: a6fc7b45-66f8-4151-bd1e-484e60c45d7b\'", "action": 1, "sub-action": 1}'
+[2024-12-16 02:39:31] [DEBUG]: Serialized data length (4 bytes): b'\x00\x00\x00y'
+[2024-12-16 02:39:31] [INFO]: Sent the length of serialized data to the server.
+[2024-12-16 02:39:31] [INFO]: Sent serialized data to the server.
+[2024-12-16 02:39:31] [DEBUG]: Waiting to receive the length of the server response.
+[2024-12-16 02:39:31] [INFO]: Received server response length: 9 bytes
+[2024-12-16 02:39:31] [DEBUG]: Receiving the full response from the server (length: 9 bytes).
+[2024-12-16 02:39:31] [DEBUG]: Received serialized data: b'["rumic"]'
+[2024-12-16 02:39:31] [DEBUG]: Deserializing server response.
+[2024-12-16 02:39:31] [INFO]: Deserialized response: ['rumic']
+[2024-12-16 02:40:31] [DEBUG]: Preparing data to send to the server.
+[2024-12-16 02:40:31] [DEBUG]: Added username to data: rumic
+[2024-12-16 02:40:31] [DEBUG]: Serializing data: {'token': "b'Authentication successful. Your token: a6fc7b45-66f8-4151-bd1e-484e60c45d7b'", 'action': 1, 'sub-action': 3, 'username': 'rumic'}
+[2024-12-16 02:40:31] [DEBUG]: Serialized data: b'{"token": "b\'Authentication successful. Your token: a6fc7b45-66f8-4151-bd1e-484e60c45d7b\'", "action": 1, "sub-action": 3, "username": "rumic"}'
+[2024-12-16 02:40:31] [DEBUG]: Serialized data length (4 bytes): b'\x00\x00\x00\x8e'
+[2024-12-16 02:40:31] [INFO]: Sent the length of serialized data to the server.
+[2024-12-16 02:40:31] [INFO]: Sent serialized data to the server.
+[2024-12-16 02:40:31] [DEBUG]: No response handling required for sub_action != 1.
+[2024-12-16 02:40:31] [INFO]: Sending file: libwireshark.dll, (90169064 bytes) in chunks of 131072 bytes
+[2024-12-16 02:40:36] [INFO]: File sent successfully.
+[2024-12-16 02:45:49] [DEBUG]: Preparing data to send to the server.
+[2024-12-16 02:45:49] [DEBUG]: Serializing data: {'token': "b'Authentication successful. Your token: a6fc7b45-66f8-4151-bd1e-484e60c45d7b'", 'action': 1, 'sub-action': 1}
+[2024-12-16 02:45:49] [DEBUG]: Serialized data: b'{"token": "b\'Authentication successful. Your token: a6fc7b45-66f8-4151-bd1e-484e60c45d7b\'", "action": 1, "sub-action": 1}'
+[2024-12-16 02:45:49] [DEBUG]: Serialized data length (4 bytes): b'\x00\x00\x00y'
+[2024-12-16 02:45:49] [ERROR]: Error sending data to server: EOF occurred in violation of protocol (_ssl.c:2417)
+[2024-12-16 02:45:49] [DEBUG]: Traceback (most recent call last):
+  File "C:\Users\Filip\Desktop\Projects\Python\CentralizedFaIDS\FaIDS-Client\main.py", line 140, in send_server_action
+    socket.sendall(serialized_length)
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2288.0_x64__qbz5n2kfra8p0\Lib\ssl.py", line 1210, in sendall
+    v = self.send(byte_view[count:])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2288.0_x64__qbz5n2kfra8p0\Lib\ssl.py", line 1179, in send
+    return self._sslobj.write(data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+ssl.SSLEOFError: EOF occurred in violation of protocol (_ssl.c:2417)
+
+[2024-12-16 02:45:49] [ERROR]: General error occured: 'NoneType' object is not iterable
+[2024-12-16 02:50:38] [INFO]: Configuration applied successfully.
+[2024-12-16 02:50:44] [DEBUG]: Received token, proceeding with program
+[2024-12-16 02:50:46] [DEBUG]: Preparing data to send to the server.
+[2024-12-16 02:50:46] [DEBUG]: Serializing data: {'token': "b'Authentication successful. Your token: f39b7e10-6902-4ec6-ad79-48066e6b86d5'", 'action': 1, 'sub-action': 1}
+[2024-12-16 02:50:46] [DEBUG]: Serialized data: b'{"token": "b\'Authentication successful. Your token: f39b7e10-6902-4ec6-ad79-48066e6b86d5\'", "action": 1, "sub-action": 1}'
+[2024-12-16 02:50:46] [DEBUG]: Serialized data length (4 bytes): b'\x00\x00\x00y'
+[2024-12-16 02:50:46] [INFO]: Sent the length of serialized data to the server.
+[2024-12-16 02:50:46] [INFO]: Sent serialized data to the server.
+[2024-12-16 02:50:46] [DEBUG]: Waiting to receive the length of the server response.
+[2024-12-16 02:50:46] [INFO]: Received server response length: 9 bytes
+[2024-12-16 02:50:46] [DEBUG]: Receiving the full response from the server (length: 9 bytes).
+[2024-12-16 02:50:46] [DEBUG]: Received serialized data: b'["rumic"]'
+[2024-12-16 02:50:46] [DEBUG]: Deserializing server response.
+[2024-12-16 02:50:46] [INFO]: Deserialized response: ['rumic']
+[2024-12-16 02:50:48] [DEBUG]: Preparing data to send to the server.
+[2024-12-16 02:50:48] [DEBUG]: Added username to data: rumic
+[2024-12-16 02:50:48] [DEBUG]: Serializing data: {'token': "b'Authentication successful. Your token: f39b7e10-6902-4ec6-ad79-48066e6b86d5'", 'action': 1, 'sub-action': 3, 'username': 'rumic'}
+[2024-12-16 02:50:48] [DEBUG]: Serialized data: b'{"token": "b\'Authentication successful. Your token: f39b7e10-6902-4ec6-ad79-48066e6b86d5\'", "action": 1, "sub-action": 3, "username": "rumic"}'
+[2024-12-16 02:50:48] [DEBUG]: Serialized data length (4 bytes): b'\x00\x00\x00\x8e'
+[2024-12-16 02:50:48] [INFO]: Sent the length of serialized data to the server.
+[2024-12-16 02:50:48] [INFO]: Sent serialized data to the server.
+[2024-12-16 02:50:48] [DEBUG]: No response handling required for sub_action != 1.
+[2024-12-16 02:50:48] [INFO]: Sending file: libwireshark.dll, (90169064 bytes) in chunks of 131072 bytes
+[2024-12-16 02:50:53] [INFO]: File sent successfully.
+[2024-12-16 02:54:50] [INFO]: Configuration applied successfully.
+[2024-12-16 02:54:57] [DEBUG]: Received token, proceeding with program
+[2024-12-16 02:55:22] [DEBUG]: Preparing data to send to the server.
+[2024-12-16 02:55:22] [DEBUG]: Serializing data: {'token': "b'Authentication successful. Your token: 75e941a9-55b1-47b7-abbf-3d42ca51c543'", 'action': 1, 'sub-action': 1}
+[2024-12-16 02:55:22] [DEBUG]: Serialized data: b'{"token": "b\'Authentication successful. Your token: 75e941a9-55b1-47b7-abbf-3d42ca51c543\'", "action": 1, "sub-action": 1}'
+[2024-12-16 02:55:22] [DEBUG]: Serialized data length (4 bytes): b'\x00\x00\x00y'
+[2024-12-16 02:55:22] [INFO]: Sent the length of serialized data to the server.
+[2024-12-16 02:55:22] [INFO]: Sent serialized data to the server.
+[2024-12-16 02:55:22] [DEBUG]: Waiting to receive the length of the server response.
+[2024-12-16 02:55:22] [INFO]: Received server response length: 9 bytes
+[2024-12-16 02:55:22] [DEBUG]: Receiving the full response from the server (length: 9 bytes).
+[2024-12-16 02:55:22] [DEBUG]: Received serialized data: b'["rumic"]'
+[2024-12-16 02:55:22] [DEBUG]: Deserializing server response.
+[2024-12-16 02:55:22] [INFO]: Deserialized response: ['rumic']
+[2024-12-16 02:55:23] [DEBUG]: Preparing data to send to the server.
+[2024-12-16 02:55:23] [DEBUG]: Added username to data: rumic
+[2024-12-16 02:55:23] [DEBUG]: Serializing data: {'token': "b'Authentication successful. Your token: 75e941a9-55b1-47b7-abbf-3d42ca51c543'", 'action': 1, 'sub-action': 3, 'username': 'rumic'}
+[2024-12-16 02:55:23] [DEBUG]: Serialized data: b'{"token": "b\'Authentication successful. Your token: 75e941a9-55b1-47b7-abbf-3d42ca51c543\'", "action": 1, "sub-action": 3, "username": "rumic"}'
+[2024-12-16 02:55:23] [DEBUG]: Serialized data length (4 bytes): b'\x00\x00\x00\x8e'
+[2024-12-16 02:55:23] [INFO]: Sent the length of serialized data to the server.
+[2024-12-16 02:55:23] [INFO]: Sent serialized data to the server.
+[2024-12-16 02:55:23] [DEBUG]: No response handling required for sub_action != 1.
+[2024-12-16 02:55:23] [INFO]: Sending file: libwireshark.dll, (90169064 bytes) in chunks of 131072 bytes
+[2024-12-16 02:55:28] [INFO]: File sent successfully.
