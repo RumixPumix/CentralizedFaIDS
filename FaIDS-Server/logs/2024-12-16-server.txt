@@ -261,3 +261,59 @@ TypeError: 'NoneType' object is not subscriptable
 TypeError: 'NoneType' object is not subscriptable
 
 [2024-12-16 16:37:18] [INFO]: Connection to client ('192.168.1.218', 65067) closed.
+[2024-12-16 16:46:08] [INFO]: Repository is up to date.
+[2024-12-16 16:46:08] [INFO]: No updates required.
+[2024-12-16 16:46:08] [INFO]: Configuration applied successfully.
+[2024-12-16 16:46:08] [DEBUG]: server_bind_address:192.168.1.129
+[2024-12-16 16:46:08] [DEBUG]: server_port:5000
+[2024-12-16 16:46:08] [DEBUG]: debug_mode:True
+[2024-12-16 16:46:08] [INFO]: Initializing server...
+[2024-12-16 16:46:08] [INFO]: Server started, listening on: 192.168.1.129:5000
+[2024-12-16 16:46:08] [DEBUG]: Loaded these credentials: {'admin': 'Pa$$w0rd', 'rumic': '1203', 'rumic2': '1203'}
+[2024-12-16 16:46:28] [INFO]: Connection from ('192.168.1.218', 65147)
+[2024-12-16 16:46:28] [DEBUG]: Received admin, from: ('192.168.1.218', 65147)
+[2024-12-16 16:46:28] [DEBUG]: Received Pa$$w0rd, from: ('192.168.1.218', 65147)
+[2024-12-16 16:46:28] [INFO]: Checking for the following inside here: {'admin': 'Pa$$w0rd', 'rumic': '1203', 'rumic2': '1203'}
+[2024-12-16 16:46:28] [INFO]: Client ('192.168.1.218', 65147) authenticated successfully.
+[2024-12-16 16:46:28] [INFO]: Client ('192.168.1.218', 65147) authenticated with token 305eb09a-5e60-4eca-810c-499ce1987ddd. Starting communication thread.
+[2024-12-16 16:46:31] [INFO]: Connection from ('192.168.1.198', 60778)
+[2024-12-16 16:46:31] [DEBUG]: Received rumic, from: ('192.168.1.198', 60778)
+[2024-12-16 16:46:31] [DEBUG]: Received 1203, from: ('192.168.1.198', 60778)
+[2024-12-16 16:46:31] [INFO]: Checking for the following inside here: {'admin': 'Pa$$w0rd', 'rumic': '1203', 'rumic2': '1203'}
+[2024-12-16 16:46:31] [INFO]: Client ('192.168.1.198', 60778) authenticated successfully.
+[2024-12-16 16:46:31] [INFO]: Client ('192.168.1.198', 60778) authenticated with token 577366b5-4b1c-465e-ad7e-943663c5c78a. Starting communication thread.
+[2024-12-16 16:46:33] [INFO]: User 'rumic' set to file transfer state
+[2024-12-16 16:46:40] [INFO]: User 'admin' requested users for file transfer
+[2024-12-16 16:46:40] [DEBUG]: Preparing file transfer ready user list
+[2024-12-16 16:46:40] [DEBUG]: Formatting JSON response to send to client...
+[2024-12-16 16:46:40] [DEBUG]: Sending user list...
+[2024-12-16 16:46:40] [DEBUG]: Error receiving data: Expecting value: line 1 column 1 (char 0)
+[2024-12-16 16:46:40] [INFO]: Data received: b''
+[2024-12-16 16:46:40] [DEBUG]: Error while handling client ('192.168.1.218', 65147): 'NoneType' object is not subscriptable
+[2024-12-16 16:46:40] [DEBUG]: Traceback (most recent call last):
+  File "C:\Users\filip\Desktop\Projects\Programming\Python\CentralizedFaIDS\FaIDS-Server\client_thread_handler.py", line 143, in handle_client
+    match received_dict["action"]:
+          ~~~~~~~~~~~~~^^^^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+
+[2024-12-16 16:46:40] [INFO]: Connection to client ('192.168.1.218', 65147) closed.
+[2024-12-16 16:50:40] [INFO]: Connection from ('192.168.1.218', 65152)
+[2024-12-16 16:50:40] [DEBUG]: Received admin, from: ('192.168.1.218', 65152)
+[2024-12-16 16:50:40] [DEBUG]: Received Pa$$w0rd, from: ('192.168.1.218', 65152)
+[2024-12-16 16:50:40] [INFO]: Checking for the following inside here: {'admin': 'Pa$$w0rd', 'rumic': '1203', 'rumic2': '1203'}
+[2024-12-16 16:50:40] [INFO]: Client ('192.168.1.218', 65152) authenticated successfully.
+[2024-12-16 16:50:40] [INFO]: Client ('192.168.1.218', 65152) authenticated with token e1cdb59d-a18d-4a78-a4ac-fd4e1d671bda. Starting communication thread.
+[2024-12-16 16:50:42] [INFO]: User 'admin' requested users for file transfer
+[2024-12-16 16:50:42] [DEBUG]: Preparing file transfer ready user list
+[2024-12-16 16:50:42] [DEBUG]: Formatting JSON response to send to client...
+[2024-12-16 16:50:42] [DEBUG]: Sending user list...
+[2024-12-16 16:50:42] [DEBUG]: Error receiving data: Expecting value: line 1 column 1 (char 0)
+[2024-12-16 16:50:42] [INFO]: Data received: b''
+[2024-12-16 16:50:42] [DEBUG]: Error while handling client ('192.168.1.218', 65152): 'NoneType' object is not subscriptable
+[2024-12-16 16:50:42] [DEBUG]: Traceback (most recent call last):
+  File "C:\Users\filip\Desktop\Projects\Programming\Python\CentralizedFaIDS\FaIDS-Server\client_thread_handler.py", line 143, in handle_client
+    match received_dict["action"]:
+          ~~~~~~~~~~~~~^^^^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+
+[2024-12-16 16:50:42] [INFO]: Connection to client ('192.168.1.218', 65152) closed.

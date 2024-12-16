@@ -161,3 +161,4 @@ ssl.SSLEOFError: EOF occurred in violation of protocol (_ssl.c:2417)
 [2024-12-16 02:55:23] [DEBUG]: No response handling required for sub_action != 1.
 [2024-12-16 02:55:23] [INFO]: Sending file: libwireshark.dll, (90169064 bytes) in chunks of 131072 bytes
 [2024-12-16 02:55:28] [INFO]: File sent successfully.
+[2024-12-16 16:45:43] [INFO]: Configuration applied successfully.

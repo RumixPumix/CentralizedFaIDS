@@ -228,7 +228,7 @@ def server_communication_handler_session(ssl_client_connection):
                             file_to_send = files[file_to_send_index - 1]
                             print(f"Selected file: {file_to_send}")
                             active_users = send_server_action(ssl_client_connection, 1, 1)
-                            if not active_user:
+                            if not active_users:
                                 log(f"Server didn't send any users ready for file transfer!", 3)
                                 continue
                             index = 1
