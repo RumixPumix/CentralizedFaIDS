@@ -1,0 +1,26 @@
+CLIENT SIDE COMMUNICATION
+Arguments:
+1 - File handling
+	Subaction:
+		1 - Request file ready users
+		2 - Set ready state for file transfers.
+		3 - Accept/Decline file transfer from user. Username
+		4 - Initiate File transfer to user. Username
+
+Example for one:
+send_server_action(socket, action, subaction, username=None)
+
+SENDER
+1.
+ssa(socket, 1, 1)
+
+-Dodat "R" kao refresh tko je spreman primit file. Gdje cemo samo ponovno poslat zahtjev za korisnike.
+
+SERVER SIDE COMMUNICATION
+Arguments:
+	File Handling:
+		SubAction:
+			1 - List of users that are ready to transfer files
+			2 - Set the user inside the file_ready_dict.
+			3 - Send a file transfer query to the specified user.
+			4 - Start the file transfer process

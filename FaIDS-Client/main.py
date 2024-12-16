@@ -272,8 +272,8 @@ def server_communication_handler_session(ssl_client_connection):
                 else:
                     print("No files available to upload.")
             elif user_choice == 2:
-                input("Press enter to start receiving a file... New update will allow accepting/declining file transfer")
                 send_server_action(ssl_client_connection, 1, 2)
+                input("Press enter to start receiving a file... New update will allow accepting/declining file transfer")
                 if receive_file(ssl_client_connection):
                     input()
                     continue

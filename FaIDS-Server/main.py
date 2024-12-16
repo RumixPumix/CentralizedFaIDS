@@ -1,6 +1,5 @@
 configuration = {}
 user_credentials = {}
-active_clients = {}
 CERT_FILE = "cert.pem"
 KEY_FILE = "key.pem"
 import subprocess
@@ -314,7 +313,6 @@ def attempt_recovery(context):
         log("Unable to recover from the encountered issue.", 1)
 
 def main():
-    global active_clients
     log(f"Initializing server...", 3)
     try:
         context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
@@ -356,7 +354,7 @@ def main():
                             client_connection, client_addr_port = secure_server_sock.accept()
                             log(f"Connection from {client_addr_port}", 3)
                             print(f"{user_credentials} Here we have before we call authenticate client")
-                            token, username, active_clients = client_authentication.authenticate_client(client_connection, client_addr_port, user_credentials, active_clients)
+                            token, username = client_authentication.authenticate_client(client_connection, client_addr_port, user_credentials)
                             if token:
                                 # Start client thread upon successful authentication
                                 client_thread = threading.Thread(target=client_thread_handler.handle_client, args=(client_connection, client_addr_port, token, username))

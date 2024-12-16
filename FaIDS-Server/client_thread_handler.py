@@ -1,10 +1,12 @@
 import threading
 import json
-from main import log, traceback_func, active_clients
+from main import log, traceback_func
 from chunk_size_calculator import get_optimal_chunk_size
 
+active_clients = {}
 file_receive_users = {}
 file_receive_lock = threading.Lock()  # Create a lock to manage access to the file_receive_users dictionary
+active_clients_lock = threading.Lock()
 
 def recv_all(socket, length):
     """
@@ -67,7 +69,8 @@ def transfer_file(from_socket, to_socket):
 
 def handle_client(client_socket, client_addr, token, username):
     log(f"Client {client_addr} authenticated with token {token}. Starting communication thread.", 3)
-    
+    with active_clients_lock:
+        active_clients[username] = [token, client_socket]
     try:
         while True:
             # Print the current active users (for debugging purposes)

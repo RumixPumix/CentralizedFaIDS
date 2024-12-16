@@ -3,7 +3,7 @@ from main import log
 from main import traceback_func
 
 
-def authenticate_client(client_socket, client_addr, user_credentials, active_clients):
+def authenticate_client(client_socket, client_addr, user_credentials):
     try:
         #client_socket.sendall(b"Please provide your username:")
         username = client_socket.recv(1024).decode().strip()
@@ -20,9 +20,7 @@ def authenticate_client(client_socket, client_addr, user_credentials, active_cli
             token = str(uuid.uuid4())  # Generate a unique token for the client
             client_socket.sendall(f"Authentication successful. Your token: {token}".encode())
             log(f"Client {client_addr} authenticated successfully.", 3)
-            active_clients[token] = client_addr
-            print(active_clients)
-            return token, username, active_clients
+            return token, username
         else:
             client_socket.sendall(b"Authentication failed.")
             log(f"Authentication failed for client {client_addr}.", 1)
