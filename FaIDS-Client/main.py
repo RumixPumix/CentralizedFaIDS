@@ -115,44 +115,63 @@ def send_file(socket, filepath):
         log(f"Unexpected error in send_file: {e}", 1)
         return False
 
-
-
 def send_server_action(socket, action, sub_action, username=None):
+    log("Preparing data to send to the server.", 4)
+
+    # Prepare the data dictionary
     data_to_send = {
-        "token": str(token),
+        "token": str(token),  # Ensure the token is a string
         "action": action,
         "sub-action": sub_action
     }
     if username is not None:
         data_to_send["username"] = username
+        log(f"Added username to data: {username}", 4)
 
     try:
         # Serialize the dictionary
+        log(f"Serializing data: {data_to_send}", 4)
         serialized_data = json.dumps(data_to_send).encode()
-        
+        log(f"Serialized data: {serialized_data}", 4)
+
         # Send the length of the serialized data
-        socket.sendall(len(serialized_data).to_bytes(4, 'big'))  # Send size in 4 bytes
-        
+        serialized_length = len(serialized_data).to_bytes(4, 'big')
+        log(f"Serialized data length (4 bytes): {serialized_length}", 4)
+        socket.sendall(serialized_length)
+        log("Sent the length of serialized data to the server.", 3)
+
         # Send the serialized dictionary
         socket.sendall(serialized_data)
+        log("Sent serialized data to the server.", 3)
 
         # Only handle server responses if sub_action == 1
         if sub_action != 1:
+            log("No response handling required for sub_action != 1.", 4)
             return
 
         # Receive the response length
-        data_length = int.from_bytes(socket.recv(4), 'big')
-        
+        log("Waiting to receive the length of the server response.", 4)
+        response_length_data = socket.recv(4)
+        if not response_length_data:
+            log("Failed to receive response length from server.", 1)
+            return
+        data_length = int.from_bytes(response_length_data, 'big')
+        log(f"Received server response length: {data_length} bytes", 3)
+
         # Receive the complete serialized response
+        log(f"Receiving the full response from the server (length: {data_length} bytes).", 4)
         serialized_data = recv_all(socket, data_length)
-        
+        log(f"Received serialized data: {serialized_data}", 4)
+
         # Deserialize the response
+        log("Deserializing server response.", 4)
         received_list = json.loads(serialized_data.decode())
-        print(received_list)
+        log(f"Deserialized response: {received_list}", 3)
         return received_list
+
     except Exception as e:
         log(f"Error sending data to server: {e}", 1)
-        print(traceback.format_exc())
+        log(traceback.format_exc(), 4)  # Log full traceback for debugging
 
 def recv_all(socket, length):
     data = b""
