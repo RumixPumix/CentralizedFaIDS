@@ -73,14 +73,7 @@ def send_client_response(client_socket, action, sub_action, response):
         "response": response
     }
 
-<<<<<<< Updated upstream
-def handle_client(client_socket, client_addr, token, username):
-    log(f"Client {client_addr} authenticated with token {token}. Starting communication thread.", 3)
-    with active_clients_lock:
-        active_clients[username] = [token, client_socket]
-=======
     #Serializing the data
->>>>>>> Stashed changes
     try:
         serialized_data = json.dumps(data_to_send).encode()
 
@@ -135,7 +128,8 @@ def file_action_handler(client_socket, received_dict, username):
 
 def handle_client(client_socket, client_addr, token, username):
     log(f"Client {client_addr} authenticated with token {token}. Starting communication thread.", 3)
-    
+    with active_clients_lock:
+        active_clients[username] = [token, client_socket]
     try:
         while True:
             # Print the current active users (for debugging purposes)
