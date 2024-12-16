@@ -67,6 +67,7 @@ def transfer_file(from_socket, to_socket):
         traceback_func()
 
 def send_client_action(client_socket, action, sub_action, response):
+    log(f"Formatting JSON response to send to client...", 4)
     data_to_send = {
         "action": action,
         "sub-action": sub_action,
@@ -75,8 +76,8 @@ def send_client_action(client_socket, action, sub_action, response):
 
     #Serializing the data
     try:
+        log(f"Sending user list...", 4)
         serialized_data = json.dumps(data_to_send).encode()
-
         serialized_data_length = len(serialized_data).to_bytes(4, 'big')
         client_socket.sendall(serialized_data_length)
         client_socket.sendall(serialized_data)
@@ -102,6 +103,7 @@ def receive_client_response(client_socket):
         log(f"Data received: {serialized_data}")
 
 def send_file_transfer_ready_users(client_socket):
+    log(f"Preparing file transfer ready user list", 4)
     with file_receive_lock:
         username_list = list(file_receive_users.keys())
     send_client_action(client_socket, 1, 1, username_list)

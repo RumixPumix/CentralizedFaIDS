@@ -145,7 +145,7 @@ def send_file(socket, filepath):
         return False
 
 def parse_server_response_data(data):
-    response = data.get("response", None)
+    return data.get("response", None)
 
 def send_server_action(socket, action, sub_action, username=None):
     log("Preparing data to send to the server.", 4)
