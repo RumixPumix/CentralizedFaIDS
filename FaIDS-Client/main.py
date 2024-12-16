@@ -3,6 +3,7 @@ import os
 import json
 import socket
 import ssl
+import traceback
 from chunk_size_calculator import get_optimal_chunk_size
 
 user_verified = False
@@ -16,14 +17,13 @@ def receive_file(socket):
         # Receive metadata
         try:
             metadata_length = int.from_bytes(socket.recv(4), 'big')  # Metadata length
-            metadata = recv_all(socket, metadata_length).decode()
+            metadata = recv_all(socket, metadata_length)
         except (ValueError, ConnectionError) as e:
             log(f"Error receiving metadata: {e}", 1)
             return False
-
         # Parse metadata
         try:
-            metadata_dict = json.loads(metadata)
+            metadata_dict = json.loads(metadata.decode())
             filename = metadata_dict.get("filename")
             filesize = metadata_dict.get("filesize")
             if not filename or not filesize:
@@ -119,7 +119,7 @@ def send_file(socket, filepath):
 
 def send_server_action(socket, action, sub_action, username=None):
     data_to_send = {
-        "token": token,
+        "token": str(token),
         "action": action,
         "sub-action": sub_action
     }
@@ -128,7 +128,7 @@ def send_server_action(socket, action, sub_action, username=None):
 
     try:
         # Serialize the dictionary
-        serialized_data = json.dumps(data_to_send).encode('utf-8')
+        serialized_data = json.dumps(data_to_send).encode()
         
         # Send the length of the serialized data
         socket.sendall(len(serialized_data).to_bytes(4, 'big'))  # Send size in 4 bytes
@@ -147,12 +147,12 @@ def send_server_action(socket, action, sub_action, username=None):
         serialized_data = recv_all(socket, data_length)
         
         # Deserialize the response
-        received_list = json.loads(serialized_data.decode('utf-8'))
-        
+        received_list = json.loads(serialized_data.decode())
         print(received_list)
         return received_list
     except Exception as e:
         log(f"Error sending data to server: {e}", 1)
+        print(traceback.format_exc())
 
 def recv_all(socket, length):
     data = b""

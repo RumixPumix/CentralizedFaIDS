@@ -1,2 +1,0 @@
-[2024-12-16 00:34:35] [WARNING]: config.json not found. Proceeding with initial setup.
-[2024-12-16 00:34:47] [DEBUG]: Config file saved.

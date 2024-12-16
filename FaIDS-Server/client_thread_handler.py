@@ -100,6 +100,7 @@ def handle_client(client_socket, client_addr, token, username):
                                     username_list = list(file_receive_users.keys())
                                 serialized_data = json.dumps(username_list).encode()
                                 client_socket.sendall(len(serialized_data).to_bytes(4, 'big'))
+                                print(f"Sending usernames: {serialized_data}")
                                 client_socket.sendall(serialized_data)
                             case 2:
                                 # Lock the dictionary while modifying it (add user to the file receive users)
@@ -116,7 +117,7 @@ def handle_client(client_socket, client_addr, token, username):
                 log(f"Error while handling client {client_addr}: {e}", 4)
                 break  # Exit loop if there's an error in receiving data
 
-    except Exception as e:
+    except Exception as e:  
         log(f"ERROR-CTH-HC-00-01-01: Error handling client {client_addr}: {e}", 4)
         log(f"Client {client_addr} connection closed due to an error.", 1)
         traceback_func()
