@@ -23,6 +23,7 @@ def recv_all(socket, length):
 def receive_file(socket):
     try:
         clear_console()
+        print("Waiting for file...")
 
         # Receive metadata
         try:
@@ -145,6 +146,7 @@ def send_file(socket, filepath):
         return False
 
 def parse_server_response_data(data):
+    log(f"Parsing server response...", 4)
     return data.get("response", None)
 
 def send_server_action(socket, action, sub_action, username=None):
@@ -173,8 +175,8 @@ def send_server_action(socket, action, sub_action, username=None):
 
         # Only handle server responses if sub_action == 1
         if sub_action != 1:
-            return
-        parse_server_response_data(receive_server_response(socket))
+            return None
+        log(f"Waiting server response for user ready for file transfer list.", 4)
         return parse_server_response_data(receive_server_response(socket))
 
     except Exception as e:
@@ -183,9 +185,11 @@ def send_server_action(socket, action, sub_action, username=None):
 
 def receive_server_response(server_socket):
     try:
+        log(f"Receiving data", 4)
         data_length = int.from_bytes(server_socket.recv(4), "big")
         serialized_data = recv_all(server_socket, data_length)
         received_dict = json.loads(serialized_data.decode())
+        log(f"Returning given list", 4)
         return received_dict
     except Exception as data_receiving_error:
         log(f"Error receiving data: {data_receiving_error}", 4)
@@ -224,6 +228,9 @@ def server_communication_handler_session(ssl_client_connection):
                             file_to_send = files[file_to_send_index - 1]
                             print(f"Selected file: {file_to_send}")
                             active_users = send_server_action(ssl_client_connection, 1, 1)
+                            if not active_user:
+                                log(f"Server didn't send any users ready for file transfer!", 3)
+                                continue
                             index = 1
                             for active_user in active_users:
                                 if active_user is not None:
@@ -243,7 +250,7 @@ def server_communication_handler_session(ssl_client_connection):
                     print("No files available to upload.")
             elif user_choice == 2:
                 send_server_action(ssl_client_connection, 1, 2)
-                input("Press enter to start receiving a file... New update will allow accepting/declining file transfer")
+                input("Enter file receiving mode? Press Enter...")
                 if receive_file(ssl_client_connection):
                     input()
                     continue
