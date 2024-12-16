@@ -81,7 +81,6 @@ def handle_client(client_socket, client_addr, token, username):
     try:
         while True:
             # Print the current active users (for debugging purposes)
-            print(file_receive_users)
 
             try:
                 # Receive the data length and the actual data
@@ -95,22 +94,25 @@ def handle_client(client_socket, client_addr, token, username):
                         # Handle action 1 (request for users)
                         match received_dict["sub-action"]:
                             case 1:
+                                log(f"User {username} requested active users for file transfer.", 3)
                                 # Lock the dictionary while reading it
                                 with file_receive_lock:
                                     username_list = list(file_receive_users.keys())
                                 serialized_data = json.dumps(username_list).encode()
                                 client_socket.sendall(len(serialized_data).to_bytes(4, 'big'))
-                                print(f"Sending usernames: {serialized_data}")
+                                log(f"Sending usernames: {serialized_data}", 4)
                                 client_socket.sendall(serialized_data)
                             case 2:
+                                log(f"User {username} requested files to be sent over.", 3)
                                 # Lock the dictionary while modifying it (add user to the file receive users)
                                 with file_receive_lock:
                                     file_receive_users[username] = client_socket
+                                    log(f"Current users waiting for files: {file_receive_users}", 4)
                             case 3:
                                 # File transfer request
                                 target_user = received_dict.get("username")
                                 if target_user in file_receive_users:
-                                    log(f"Sending a file to {target_user} from {username}")
+                                    log(f"File transfer initiated - From: {username} To: {target_user}", 3)
                                     transfer_file(client_socket, file_receive_users[target_user])
 
             except Exception as e:
