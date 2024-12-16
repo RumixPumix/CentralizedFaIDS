@@ -7,3 +7,165 @@
 [2024-12-16 00:33:02] [INFO]: Initializing server...
 [2024-12-16 00:33:02] [INFO]: Server started, listening on: 192.168.1.129:5000
 [2024-12-16 00:33:02] [DEBUG]: Loaded these credentials: {'admin': 'Pa$$w0rd', 'rumic': '1203', 'rumic2': '1203'}
+[2024-12-16 02:35:31] [INFO]: Repository is up to date.
+[2024-12-16 02:35:31] [INFO]: No updates required.
+[2024-12-16 02:35:31] [INFO]: Configuration applied successfully.
+[2024-12-16 02:35:31] [DEBUG]: server_bind_address:192.168.1.129
+[2024-12-16 02:35:31] [DEBUG]: server_port:5000
+[2024-12-16 02:35:31] [DEBUG]: debug_mode:True
+[2024-12-16 02:35:31] [INFO]: Initializing server...
+[2024-12-16 02:35:31] [INFO]: Server started, listening on: 192.168.1.129:5000
+[2024-12-16 02:35:31] [DEBUG]: Loaded these credentials: {'admin': 'Pa$$w0rd', 'rumic': '1203', 'rumic2': '1203'}
+[2024-12-16 02:35:54] [INFO]: Connection from ('192.168.1.198', 55478)
+[2024-12-16 02:35:54] [DEBUG]: Received rumic, from: ('192.168.1.198', 55478)
+[2024-12-16 02:35:54] [DEBUG]: Received 1203, from: ('192.168.1.198', 55478)
+[2024-12-16 02:35:54] [INFO]: Checking for the following inside here: {'admin': 'Pa$$w0rd', 'rumic': '1203', 'rumic2': '1203'}
+[2024-12-16 02:35:54] [INFO]: Client ('192.168.1.198', 55478) authenticated successfully.
+[2024-12-16 02:35:54] [INFO]: Client ('192.168.1.198', 55478) authenticated with token 161a3d7d-113b-4320-8bf1-08676dad30d4. Starting communication thread.
+[2024-12-16 02:35:57] [INFO]: User rumic requested files to be sent over.
+[2024-12-16 02:35:57] [DEBUG]: Current users waiting for files: {'rumic': <ssl.SSLSocket fd=1220, family=2, type=1, proto=0, laddr=('192.168.1.129', 5000), raddr=('192.168.1.198', 55478)>}
+[2024-12-16 02:36:22] [INFO]: Connection from ('192.168.1.218', 63376)
+[2024-12-16 02:36:22] [DEBUG]: Received admin, from: ('192.168.1.218', 63376)
+[2024-12-16 02:36:22] [DEBUG]: Received Pa$$w0rd, from: ('192.168.1.218', 63376)
+[2024-12-16 02:36:22] [INFO]: Checking for the following inside here: {'admin': 'Pa$$w0rd', 'rumic': '1203', 'rumic2': '1203'}
+[2024-12-16 02:36:22] [INFO]: Client ('192.168.1.218', 63376) authenticated successfully.
+[2024-12-16 02:36:22] [INFO]: Client ('192.168.1.218', 63376) authenticated with token fc29c480-a319-44c0-96ce-a6ed3978655e. Starting communication thread.
+[2024-12-16 02:36:24] [INFO]: User admin requested active users for file transfer.
+[2024-12-16 02:36:24] [DEBUG]: Sending usernames: b'["rumic"]'
+[2024-12-16 02:36:32] [INFO]: File transfer initiated - From: admin To: rumic
+[2024-12-16 02:36:32] [INFO]: Starting file transfer: libwireshark.dll (90169064 bytes) in chunks of 131072 bytes
+[2024-12-16 02:36:37] [INFO]: File transfer completed: libwireshark.dll (90169064/90169064 bytes)
+[2024-12-16 02:36:37] [DEBUG]: Error while handling client ('192.168.1.218', 63376): [WinError 10038] An operation was attempted on something that is not a socket
+[2024-12-16 02:36:37] [DEBUG]: Error while handling client ('192.168.1.198', 55478): Expecting value: line 1 column 1 (char 0)
+[2024-12-16 02:36:37] [INFO]: Connection to client ('192.168.1.218', 63376) closed.
+[2024-12-16 02:36:37] [INFO]: Connection to client ('192.168.1.198', 55478) closed.
+[2024-12-16 02:39:14] [INFO]: Connection from ('192.168.1.198', 51266)
+[2024-12-16 02:39:14] [DEBUG]: Received rumic, from: ('192.168.1.198', 51266)
+[2024-12-16 02:39:14] [DEBUG]: Received 1203, from: ('192.168.1.198', 51266)
+[2024-12-16 02:39:14] [INFO]: Checking for the following inside here: {'admin': 'Pa$$w0rd', 'rumic': '1203', 'rumic2': '1203'}
+[2024-12-16 02:39:14] [INFO]: Client ('192.168.1.198', 51266) authenticated successfully.
+[2024-12-16 02:39:14] [INFO]: Client ('192.168.1.198', 51266) authenticated with token a3938843-5d88-4405-b128-8fe8a23ab675. Starting communication thread.
+[2024-12-16 02:39:16] [INFO]: User rumic requested files to be sent over.
+[2024-12-16 02:39:16] [DEBUG]: Current users waiting for files: {'rumic': <ssl.SSLSocket fd=1928, family=2, type=1, proto=0, laddr=('192.168.1.129', 5000), raddr=('192.168.1.198', 51266)>}
+[2024-12-16 02:39:31] [INFO]: Connection from ('192.168.1.218', 63379)
+[2024-12-16 02:39:31] [DEBUG]: Received admin, from: ('192.168.1.218', 63379)
+[2024-12-16 02:39:31] [DEBUG]: Received Pa$$w0rd, from: ('192.168.1.218', 63379)
+[2024-12-16 02:39:31] [INFO]: Checking for the following inside here: {'admin': 'Pa$$w0rd', 'rumic': '1203', 'rumic2': '1203'}
+[2024-12-16 02:39:31] [INFO]: Client ('192.168.1.218', 63379) authenticated successfully.
+[2024-12-16 02:39:31] [INFO]: Client ('192.168.1.218', 63379) authenticated with token a6fc7b45-66f8-4151-bd1e-484e60c45d7b. Starting communication thread.
+[2024-12-16 02:39:33] [INFO]: User admin requested active users for file transfer.
+[2024-12-16 02:39:33] [DEBUG]: Sending usernames: b'["rumic"]'
+[2024-12-16 02:40:32] [INFO]: File transfer initiated - From: admin To: rumic
+[2024-12-16 02:40:32] [INFO]: Starting file transfer: libwireshark.dll (90169064 bytes) in chunks of 131072 bytes
+[2024-12-16 02:40:37] [INFO]: File transfer completed: libwireshark.dll (90169064/90169064 bytes)
+[2024-12-16 02:40:37] [DEBUG]: Error while handling client ('192.168.1.218', 63379): [WinError 10038] An operation was attempted on something that is not a socket
+[2024-12-16 02:40:37] [INFO]: Connection to client ('192.168.1.218', 63379) closed.
+[2024-12-16 02:40:37] [DEBUG]: Error while handling client ('192.168.1.198', 51266): Expecting value: line 1 column 1 (char 0)
+[2024-12-16 02:40:37] [INFO]: Connection to client ('192.168.1.198', 51266) closed.
+[2024-12-16 02:45:45] [INFO]: Connection from ('192.168.1.198', 36594)
+[2024-12-16 02:45:45] [DEBUG]: Received rumic, from: ('192.168.1.198', 36594)
+[2024-12-16 02:45:45] [DEBUG]: Received 1203, from: ('192.168.1.198', 36594)
+[2024-12-16 02:45:45] [INFO]: Checking for the following inside here: {'admin': 'Pa$$w0rd', 'rumic': '1203', 'rumic2': '1203'}
+[2024-12-16 02:45:45] [INFO]: Client ('192.168.1.198', 36594) authenticated successfully.
+[2024-12-16 02:45:45] [INFO]: Client ('192.168.1.198', 36594) authenticated with token af1d72fc-1cc2-41e3-97ab-534cae655851. Starting communication thread.
+[2024-12-16 02:45:46] [INFO]: User rumic requested files to be sent over.
+[2024-12-16 02:45:46] [DEBUG]: Current users waiting for files: {'rumic': <ssl.SSLSocket fd=1040, family=2, type=1, proto=0, laddr=('192.168.1.129', 5000), raddr=('192.168.1.198', 36594)>}
+[2024-12-16 02:49:52] [INFO]: Repository is up to date.
+[2024-12-16 02:49:52] [INFO]: No updates required.
+[2024-12-16 02:49:52] [INFO]: Configuration applied successfully.
+[2024-12-16 02:49:52] [DEBUG]: server_bind_address:192.168.1.129
+[2024-12-16 02:49:52] [DEBUG]: server_port:5000
+[2024-12-16 02:49:52] [DEBUG]: debug_mode:True
+[2024-12-16 02:49:52] [INFO]: Initializing server...
+[2024-12-16 02:49:52] [INFO]: Server started, listening on: 192.168.1.129:5000
+[2024-12-16 02:49:52] [DEBUG]: Loaded these credentials: {'admin': 'Pa$$w0rd', 'rumic': '1203', 'rumic2': '1203'}
+[2024-12-16 02:50:10] [INFO]: Connection from ('192.168.1.198', 40726)
+[2024-12-16 02:50:10] [DEBUG]: Received rumic, from: ('192.168.1.198', 40726)
+[2024-12-16 02:50:10] [DEBUG]: Received 1203, from: ('192.168.1.198', 40726)
+[2024-12-16 02:50:10] [INFO]: Checking for the following inside here: {'admin': 'Pa$$w0rd', 'rumic': '1203', 'rumic2': '1203'}
+[2024-12-16 02:50:10] [INFO]: Client ('192.168.1.198', 40726) authenticated successfully.
+[2024-12-16 02:50:10] [INFO]: Client ('192.168.1.198', 40726) authenticated with token 57990adc-cddd-4185-834a-d9b540f91625. Starting communication thread.
+[2024-12-16 02:50:13] [INFO]: User rumic requested files to be sent over.
+[2024-12-16 02:50:13] [DEBUG]: Current users waiting for files: {'rumic': <ssl.SSLSocket fd=1076, family=2, type=1, proto=0, laddr=('192.168.1.129', 5000), raddr=('192.168.1.198', 40726)>}
+[2024-12-16 02:50:46] [INFO]: Connection from ('192.168.1.218', 63432)
+[2024-12-16 02:50:46] [DEBUG]: Received admin, from: ('192.168.1.218', 63432)
+[2024-12-16 02:50:46] [DEBUG]: Received Pa$$w0rd, from: ('192.168.1.218', 63432)
+[2024-12-16 02:50:46] [INFO]: Checking for the following inside here: {'admin': 'Pa$$w0rd', 'rumic': '1203', 'rumic2': '1203'}
+[2024-12-16 02:50:46] [INFO]: Client ('192.168.1.218', 63432) authenticated successfully.
+[2024-12-16 02:50:46] [INFO]: Client ('192.168.1.218', 63432) authenticated with token f39b7e10-6902-4ec6-ad79-48066e6b86d5. Starting communication thread.
+[2024-12-16 02:50:48] [INFO]: User admin requested active users for file transfer.
+[2024-12-16 02:50:48] [DEBUG]: Sending usernames: b'["rumic"]'
+[2024-12-16 02:50:49] [INFO]: File transfer initiated - From: admin To: rumic
+[2024-12-16 02:50:49] [INFO]: Starting file transfer: libwireshark.dll (90169064 bytes) in chunks of 131072 bytes
+[2024-12-16 02:50:55] [INFO]: File transfer completed: libwireshark.dll (90169064/90169064 bytes)
+[2024-12-16 02:50:55] [DEBUG]: Error while handling client ('192.168.1.218', 63432): [WinError 10038] An operation was attempted on something that is not a socket
+[2024-12-16 02:50:55] [DEBUG]: Error while handling client ('192.168.1.198', 40726): Expecting value: line 1 column 1 (char 0)
+[2024-12-16 02:50:55] [DEBUG]: Traceback (most recent call last):
+  File "C:\Users\filip\Desktop\Projects\Programming\Python\CentralizedFaIDS\FaIDS-Server\client_thread_handler.py", line 87, in handle_client
+    data_length = int.from_bytes(client_socket.recv(4), "big")
+                                 ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Essential Programs\Python312\Lib\ssl.py", line 1236, in recv
+    return super().recv(buflen, flags)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: [WinError 10038] An operation was attempted on something that is not a socket
+
+[2024-12-16 02:50:55] [INFO]: Connection to client ('192.168.1.218', 63432) closed.
+[2024-12-16 02:50:55] [DEBUG]: Traceback (most recent call last):
+  File "C:\Users\filip\Desktop\Projects\Programming\Python\CentralizedFaIDS\FaIDS-Server\client_thread_handler.py", line 89, in handle_client
+    received_dict = json.loads(serialized_data.decode())
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Essential Programs\Python312\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Essential Programs\Python312\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Essential Programs\Python312\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+[2024-12-16 02:50:55] [INFO]: Connection to client ('192.168.1.198', 40726) closed.
+[2024-12-16 02:54:42] [INFO]: Repository is up to date.
+[2024-12-16 02:54:42] [INFO]: No updates required.
+[2024-12-16 02:54:42] [INFO]: Configuration applied successfully.
+[2024-12-16 02:54:42] [DEBUG]: server_bind_address:192.168.1.129
+[2024-12-16 02:54:42] [DEBUG]: server_port:5000
+[2024-12-16 02:54:42] [DEBUG]: debug_mode:True
+[2024-12-16 02:54:42] [INFO]: Initializing server...
+[2024-12-16 02:54:42] [INFO]: Server started, listening on: 192.168.1.129:5000
+[2024-12-16 02:54:43] [DEBUG]: Loaded these credentials: {'admin': 'Pa$$w0rd', 'rumic': '1203', 'rumic2': '1203'}
+[2024-12-16 02:54:59] [INFO]: Connection from ('192.168.1.218', 63450)
+[2024-12-16 02:54:59] [DEBUG]: Received admin, from: ('192.168.1.218', 63450)
+[2024-12-16 02:54:59] [DEBUG]: Received Pa$$w0rd, from: ('192.168.1.218', 63450)
+[2024-12-16 02:54:59] [INFO]: Checking for the following inside here: {'admin': 'Pa$$w0rd', 'rumic': '1203', 'rumic2': '1203'}
+[2024-12-16 02:54:59] [INFO]: Client ('192.168.1.218', 63450) authenticated successfully.
+[2024-12-16 02:54:59] [INFO]: Client ('192.168.1.218', 63450) authenticated with token 75e941a9-55b1-47b7-abbf-3d42ca51c543. Starting communication thread.
+[2024-12-16 02:55:13] [INFO]: Connection from ('192.168.1.198', 58076)
+[2024-12-16 02:55:13] [DEBUG]: Received rumic, from: ('192.168.1.198', 58076)
+[2024-12-16 02:55:13] [DEBUG]: Received 1203, from: ('192.168.1.198', 58076)
+[2024-12-16 02:55:13] [INFO]: Checking for the following inside here: {'admin': 'Pa$$w0rd', 'rumic': '1203', 'rumic2': '1203'}
+[2024-12-16 02:55:13] [INFO]: Client ('192.168.1.198', 58076) authenticated successfully.
+[2024-12-16 02:55:13] [INFO]: Client ('192.168.1.198', 58076) authenticated with token 86f178da-5a04-4c1c-bb55-24b566e26c5c. Starting communication thread.
+[2024-12-16 02:55:20] [INFO]: User rumic requested files to be sent over.
+[2024-12-16 02:55:20] [DEBUG]: Current users waiting for files: {'rumic': <ssl.SSLSocket fd=1116, family=2, type=1, proto=0, laddr=('192.168.1.129', 5000), raddr=('192.168.1.198', 58076)>}
+[2024-12-16 02:55:23] [INFO]: User admin requested active users for file transfer.
+[2024-12-16 02:55:23] [DEBUG]: Sending usernames: b'["rumic"]'
+[2024-12-16 02:55:25] [INFO]: File transfer initiated - From: admin To: rumic
+[2024-12-16 02:55:25] [INFO]: Starting file transfer: libwireshark.dll (90169064 bytes) in chunks of 131072 bytes
+[2024-12-16 02:55:30] [INFO]: File transfer completed: libwireshark.dll (90169064/90169064 bytes)
+[2024-12-16 13:21:55] [DEBUG]: Error while handling client ('192.168.1.218', 63450): Expecting value: line 1 column 1 (char 0)
+[2024-12-16 13:21:55] [DEBUG]: Traceback (most recent call last):
+  File "C:\Users\filip\Desktop\Projects\Programming\Python\CentralizedFaIDS\FaIDS-Server\client_thread_handler.py", line 79, in handle_client
+    received_dict = json.loads(serialized_data.decode())
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Essential Programs\Python312\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Essential Programs\Python312\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Essential Programs\Python312\Lib\json\decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+[2024-12-16 13:21:55] [INFO]: Connection to client ('192.168.1.218', 63450) closed.

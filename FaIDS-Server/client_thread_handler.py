@@ -63,16 +63,6 @@ def transfer_file(from_socket, to_socket):
     except Exception as e:
         log(f"Error during file transfer: {e}", 1)
         traceback_func()
-    finally:
-        # Ensure sockets are closed in case of an error
-        try:
-            from_socket.close()
-        except Exception:
-            pass
-        try:
-            to_socket.close()
-        except Exception:
-            pass
 
 
 def handle_client(client_socket, client_addr, token, username):
@@ -117,6 +107,7 @@ def handle_client(client_socket, client_addr, token, username):
 
             except Exception as e:
                 log(f"Error while handling client {client_addr}: {e}", 4)
+                traceback_func()
                 break  # Exit loop if there's an error in receiving data
 
     except Exception as e:  
