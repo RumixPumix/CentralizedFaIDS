@@ -66,27 +66,51 @@ def transfer_file(from_socket, to_socket):
         log(f"Error during file transfer: {e}", 1)
         traceback_func()
 
+def send_client_response(client_socket, action, sub_action, response):
+    data_to_send = {
+        "action": action,
+        "sub-action": sub_action,
+        "response": response
+    }
 
+<<<<<<< Updated upstream
 def handle_client(client_socket, client_addr, token, username):
     log(f"Client {client_addr} authenticated with token {token}. Starting communication thread.", 3)
     with active_clients_lock:
         active_clients[username] = [token, client_socket]
+=======
+    #Serializing the data
+>>>>>>> Stashed changes
     try:
-        while True:
-            # Print the current active users (for debugging purposes)
+        serialized_data = json.dumps(data_to_send).encode()
 
-            try:
-                # Receive the data length and the actual data
-                data_length = int.from_bytes(client_socket.recv(4), "big")
-                serialized_data = recv_all(client_socket, data_length)
-                received_dict = json.loads(serialized_data.decode())
+        serialized_data_length = len(serialized_data).to_bytes(4, 'big')
+        client_socket.sendall(serialized_data_length)
+        client_socket.sendall(serialized_data)
+    except Exception as json_error:
+        log(f"Error serializing data: {json_error}", 4)
+        try:
+            log(f"Serialized data: {serialized_data}", 4)
+        except:
+            pass
+        try:
+            log(f"Raw data: {data_to_send}", 4)
+        except:
+            pass
 
-                # Handle the action
-                match received_dict["action"]:
-                    case 1:
-                        # Handle action 1 (request for users)
+def receive_client_response(client_socket):
+    try:
+        data_length = int.from_bytes(client_socket.recv(4), "big")
+        serialized_data = recv_all(client_socket, data_length)
+        received_dict = json.loads(serialized_data.decode())
+        return received_dict
+    except Exception as data_receiving_error:
+        log(f"Error receiving data: {data_receiving_error}", 4)
+        log(f"Data received: {serialized_data}")
+
+def file_action_handler(client_socket, received_dict, username):
                         match received_dict["sub-action"]:
-                            case 1:
+                            case 1: # Handle action 1 (request for users)
                                 log(f"User {username} requested active users for file transfer.", 3)
                                 # Lock the dictionary while reading it
                                 with file_receive_lock:
@@ -107,6 +131,24 @@ def handle_client(client_socket, client_addr, token, username):
                                 if target_user in file_receive_users:
                                     log(f"File transfer initiated - From: {username} To: {target_user}", 3)
                                     transfer_file(client_socket, file_receive_users[target_user])
+
+
+def handle_client(client_socket, client_addr, token, username):
+    log(f"Client {client_addr} authenticated with token {token}. Starting communication thread.", 3)
+    
+    try:
+        while True:
+            # Print the current active users (for debugging purposes)
+
+            try:
+                # Receive the data length and the actual data
+                received_dict = receive_client_response(client_socket)
+
+                # Handle the action
+                match received_dict["action"]:
+                    case 1: #File transfer action
+                        file_action_handler(client_socket, received_dict, username)
+                        
 
             except Exception as e:
                 log(f"Error while handling client {client_addr}: {e}", 4)
